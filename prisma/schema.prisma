@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserAuthData {
+  userId          String        @id @default(uuid())
+  email           String        @db.VarChar(255) @unique
+  hashedPassword  String        @db.VarChar(255)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  userProfileData UserProfile?
+}
+
+model UserProfile {
+  userId          String        @id
+  username        String        @db.VarChar(255)
+  profileImageUrl String?       @db.VarChar(255)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  userAuthData    UserAuthData  @relation(fields: [userId], references: [userId])
+  launches        UserLaunch[]
+}
+
+model UserLaunch {
+  user            UserProfile   @relation(fields: [userId], references: [userId])
+  userId          String
+  launch          Launch        @relation(fields: [launchId], references: [launchId])
+  launchId        String
+  launchDate      DateTime      @db.Date
+
+  @@id([userId, launchId])
+}
+
+model Launch {
+  launchId        String        @id @default(uuid())
+  mission         String        @db.VarChar(255)
+  rocket          String        @db.VarChar(255)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  planetId        String        @db.VarChar(255)
+  planet          Planet        @relation(fields: [planetId], references: [planetId])
+  users           UserLaunch[]
+}
+
+model Planet {
+  planetId        String        @id @default(uuid())
+  planetName      String        @db.VarChar(255) @unique
+  launches        Launch[]
+}
