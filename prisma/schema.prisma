@@ -52,6 +52,6 @@ model Launch {
 
 model Planet {
   planetId        String        @id @default(uuid())
-  planetName      String        @db.VarChar(255)
+  planetName      String        @db.VarChar(255) @unique
   launches        Launch[]
 }
