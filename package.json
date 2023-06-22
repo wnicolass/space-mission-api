@@ -15,6 +15,9 @@
   "prisma": {
     "seed": "ts-node --transpile-only prisma/seed.ts"
   },
+  "engines": {
+    "node": "v20.0.0"
+  },
   "devDependencies": {
     "@tsconfig/node20": "^1.0.1",
     "@types/express": "^4.17.17",
