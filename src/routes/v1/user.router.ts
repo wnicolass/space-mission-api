@@ -1,13 +1,10 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import userController from '../../controllers/user.controller';
 
 export default (function userRouter(): Router {
   const router = Router();
 
-  router.get('/', (req: Request, res: Response) => {
-    return res.status(200).json({
-      sanityCheck: 'ok',
-    });
-  });
+  router.get('/', userController.create);
 
   return router;
 })();
