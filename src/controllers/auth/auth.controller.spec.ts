@@ -1,20 +1,33 @@
 import { describe, expect, it } from 'vitest';
 import request from 'supertest';
 import app from '../../app';
-// import inMemoryAuthRepository from '../../repositories/in-memory/in-memory.auth.repository';
 
 describe('Auth Controller', () => {
+  const AUTH_URL = '/v1/auth';
+
   describe('Test POST /auth', () => {
-    const AUTH_URL = '/v1/auth';
-    it('should respond with a 200 ok', async () => {
+    it('should respond with a 201 created', async () => {
+      const user = {
+        username: 'Some name',
+        email: 'john@gmail.com',
+        password: 'some password',
+      };
+
       const response = await request(app)
         .post(`${AUTH_URL}/signup`)
+        .send(user)
         .expect('Content-Type', /json/)
-        .expect(200);
+        .expect(201);
 
-      expect(response.body).toStrictEqual({
-        sanityCheck: 'ok',
-      });
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          message: 'User successfully created',
+          user: expect.objectContaining({
+            username: expect.any(String),
+            email: expect.any(String),
+          }),
+        }),
+      );
     });
   });
 });
