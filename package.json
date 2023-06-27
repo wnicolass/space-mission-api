@@ -9,7 +9,7 @@
     "build": "tsup src",
     "build:start": "npm run build && npm start",
     "test": "dotenv -e .env.test vitest run",
-    "test:dev": "vitest --watch",
+    "test:dev": "dotenv -e .env.test vitest --watch",
     "test:migrate": "dotenv -e .env.test -- npx prisma migrate dev"
   },
   "keywords": [],
