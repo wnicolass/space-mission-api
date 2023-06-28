@@ -3,3 +3,9 @@ export class InvalidArgumentError extends Error {
     super(message);
   }
 }
+
+export class UserAlreadyExistsError extends Error {
+  constructor(public message: string) {
+    super(message);
+  }
+}
