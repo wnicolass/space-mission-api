@@ -65,6 +65,18 @@ describe('Create UserAuthData', () => {
     expect(inMemoryUserAuth.users).toEqual([]);
   });
 
+  it('should throw an UserAlreadyExistsError', async ({
+    createUserAuth,
+    inMemoryUserAuth,
+  }) => {
+    inMemoryUserAuth.users?.push(validUser);
+    await expect(createUserAuth.exec(validUser)).rejects.toThrowError(
+      `User with email "${validUser.email}" already exists`,
+    );
+
+    expect(inMemoryUserAuth.users?.length).toBe(1);
+  });
+
   it('should create a user authentication data', async ({
     createUserAuth,
     inMemoryUserAuth,

@@ -3,7 +3,10 @@ import type {
   UserAuthData,
   UserAuthRepository,
 } from '../../repositories/auth.repository';
-import { InvalidArgumentError } from '../../errors/auth.errors';
+import {
+  InvalidArgumentError,
+  UserAlreadyExistsError,
+} from '../../errors/auth.errors';
 import hashPassword from '../security/hash-password';
 
 export type UserAuthWithoutPassword = Pick<UserAuthData, 'email' | 'username'>;
@@ -21,6 +24,13 @@ export function createUserAuthData(userAuthRepository: UserAuthRepository) {
 
       if (!validator.isEmail(email)) {
         throw new InvalidArgumentError('Invalid email');
+      }
+
+      const userAlreadyExists = await userAuthRepository.getUserByEmail(email);
+      if (userAlreadyExists) {
+        throw new UserAlreadyExistsError(
+          `User with email "${email}" already exists`,
+        );
       }
 
       const { hashedPassword } = await hashPassword(password);
