@@ -9,5 +9,19 @@ export default function inMemoryUserAuthRepository(): UserAuthRepository {
         res();
       });
     },
+    getUserByEmail(email) {
+      return new Promise((res) => {
+        let userAlreadyExists = false;
+        if (this.users) {
+          for (const user of this.users) {
+            if (user.email === email) {
+              userAlreadyExists = true;
+              res(userAlreadyExists);
+            }
+          }
+        }
+        return userAlreadyExists;
+      });
+    },
   };
 }

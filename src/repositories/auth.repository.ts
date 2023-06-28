@@ -10,4 +10,5 @@ export type UserAuthData = Pick<SignUpData, 'username' | 'email' | 'password'>;
 export type UserAuthRepository = {
   users?: UserAuthData[];
   signup(data: SignUpData): Promise<void>;
+  getUserByEmail(email: string): Promise<boolean>;
 };
