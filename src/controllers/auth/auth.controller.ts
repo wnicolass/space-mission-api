@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import SignUpRepositoryFactory from '../../repositories/prisma/signup.repository';
+import UserAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
 import { createUserAuthData } from '../../services/auth/create-user';
 
 type AuthController = {
@@ -9,8 +9,8 @@ type AuthController = {
 export default (function authController(): AuthController {
   return {
     async signUp(req, res) {
-      const signUpRepository = SignUpRepositoryFactory();
-      const signUpService = createUserAuthData(signUpRepository);
+      const userAuthRepository = UserAuthRepositoryFactory();
+      const signUpService = createUserAuthData(userAuthRepository);
       const newUser = await signUpService.exec(req.body);
       return res.status(201).json({
         user: newUser,
