@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import type { UserAuthRepository } from '../auth.repository';
+import type { UserAuthRepository } from '../../interfaces/auth.interfaces';
 
 export default function UserAuthRepositoryFactory(): UserAuthRepository {
   const prisma = new PrismaClient();

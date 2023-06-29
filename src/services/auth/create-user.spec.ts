@@ -7,7 +7,7 @@ import inMemoryUserAuthRepository from '../../repositories/in-memory/in-memory.a
 import {
   UserAuthRepository,
   UserAuthData,
-} from '../../repositories/auth.repository';
+} from '../../interfaces/auth.interfaces';
 
 describe('Create UserAuthData', () => {
   const validUser = {

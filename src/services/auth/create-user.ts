@@ -2,7 +2,7 @@ import validator from 'validator';
 import type {
   UserAuthData,
   UserAuthRepository,
-} from '../../repositories/auth.repository';
+} from '../../interfaces/auth.interfaces';
 import {
   InvalidArgumentError,
   UserAlreadyExistsError,
