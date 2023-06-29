@@ -17,10 +17,11 @@ export default function inMemoryUserAuthRepository(): UserAuthRepository {
             if (user.email === email) {
               userAlreadyExists = true;
               res(userAlreadyExists);
+              return;
             }
           }
         }
-        return userAlreadyExists;
+        res(userAlreadyExists);
       });
     },
   };
