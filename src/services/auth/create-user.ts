@@ -40,6 +40,7 @@ export function createUserAuthData(userAuthRepository: UserAuthRepository) {
         email,
         password: hashedPassword,
       });
+
       return {
         username,
         email,

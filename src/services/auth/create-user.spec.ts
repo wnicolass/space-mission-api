@@ -12,7 +12,7 @@ import {
 describe('Create UserAuthData', () => {
   const validUser = {
     username: 'John Doe',
-    email: 'johndoe@gmail.com',
+    email: 'jansen@gmail.com',
     password: 'John1#',
   };
 
@@ -77,10 +77,7 @@ describe('Create UserAuthData', () => {
     expect(inMemoryUserAuth.users?.length).toBe(1);
   });
 
-  it('should create a user authentication data', async ({
-    createUserAuth,
-    inMemoryUserAuth,
-  }) => {
+  it('should create a user', async ({ createUserAuth, inMemoryUserAuth }) => {
     await expect(createUserAuth.exec(validUser)).resolves.not.toThrow();
 
     expect(inMemoryUserAuth.users).toEqual(
