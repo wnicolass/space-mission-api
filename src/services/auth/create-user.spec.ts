@@ -1,12 +1,10 @@
 import { describe, test, expect, beforeEach } from 'vitest';
-import {
-  createUserAuthData,
-  type UserAuthWithoutPassword,
-} from './create-user';
+import { createUserAuthData } from './create-user';
 import inMemoryUserAuthRepository from '../../repositories/in-memory/in-memory.auth.repository';
 import {
   UserAuthRepository,
   UserAuthData,
+  UserAuthWithoutPassword,
 } from '../../interfaces/auth.interfaces';
 
 describe('Create UserAuthData', () => {

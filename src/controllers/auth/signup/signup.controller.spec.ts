@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest';
 import request from 'supertest';
 import app from '../../../app';
 
-describe('Auth Controller', () => {
+describe('Sign Up Controller', () => {
   const AUTH_URL = '/v1/auth';
 
-  describe('Test POST /auth', () => {
+  describe('Test POST /signup', () => {
     it('should respond with a 201 created', async () => {
       const user = {
         username: 'Some name',

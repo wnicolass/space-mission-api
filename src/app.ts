@@ -1,5 +1,6 @@
 import express, { Express } from 'express';
 import morgan from 'morgan';
+import serverErrorHandler from './middlewares/server-error-handler';
 import v1Router from './routes/v1/v1.router';
 
 function createApp(): Express {
@@ -12,6 +13,7 @@ function createApp(): Express {
 
   (function routes(): void {
     app.use('/v1', v1Router);
+    app.use(serverErrorHandler);
   })();
 
   return app;
