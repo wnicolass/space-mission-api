@@ -22,7 +22,6 @@
     "node": "v20.0.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2",
     "@tsconfig/node20": "^1.0.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.17",
