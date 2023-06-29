@@ -1,10 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import type { UserAuthRepository } from '../auth.repository';
 
-export default function SignUpRepositoryFactory(): UserAuthRepository {
+export default function UserAuthRepositoryFactory(): UserAuthRepository {
+  const prisma = new PrismaClient();
   return {
     async signup({ username, email, password }) {
-      const prisma = new PrismaClient();
       const userAuth = await prisma.userAuthData.create({
         data: {
           email,
@@ -17,6 +17,14 @@ export default function SignUpRepositoryFactory(): UserAuthRepository {
           username,
         },
       });
+    },
+    async getUserByEmail(email) {
+      const user = await prisma.userAuthData.findUnique({
+        where: {
+          email,
+        },
+      });
+      return !!user;
     },
   };
 }

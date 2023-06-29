@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import request from 'supertest';
+import { faker } from '@faker-js/faker';
 import app from '../../app';
 
 describe('Auth Controller', () => {
@@ -9,7 +10,7 @@ describe('Auth Controller', () => {
     it('should respond with a 201 created', async () => {
       const user = {
         username: 'Some name',
-        email: 'john@gmail.com',
+        email: faker.internet.email(),
         password: 'some password',
       };
 
