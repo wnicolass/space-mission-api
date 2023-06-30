@@ -6,26 +6,13 @@ import {
   UserAuthData,
   UserAuthWithoutPassword,
 } from '../../interfaces/auth.interfaces';
+import {
+  userWithEmptyField,
+  userWithInvalidEmail,
+  validUser,
+} from '../../tests-data/user';
 
 describe('Create UserAuthData', () => {
-  const validUser = {
-    username: 'John Doe',
-    email: 'jansen@gmail.com',
-    password: 'John1#',
-  };
-
-  const invalidUserEmptyField = {
-    username: 'John Doe',
-    email: 'johndoe',
-    password: '',
-  };
-
-  const userWithInvalidEmail = {
-    username: 'John Doe',
-    email: 'johndoe',
-    password: 'John1#',
-  };
-
   type Context = {
     inMemoryUserAuth: UserAuthRepository;
     createUserAuth: {
@@ -45,9 +32,9 @@ describe('Create UserAuthData', () => {
     createUserAuth,
     inMemoryUserAuth,
   }) => {
-    await expect(
-      createUserAuth.exec(invalidUserEmptyField),
-    ).rejects.toThrowError('Missing required field');
+    await expect(createUserAuth.exec(userWithEmptyField)).rejects.toThrowError(
+      'Missing required field',
+    );
 
     expect(inMemoryUserAuth.users).toEqual([]);
   });
