@@ -2,14 +2,13 @@ import validator from 'validator';
 import type {
   UserAuthData,
   UserAuthRepository,
-} from '../../repositories/auth.repository';
+  UserAuthWithoutPassword,
+} from '../../interfaces/auth.interfaces';
 import {
   InvalidArgumentError,
   UserAlreadyExistsError,
 } from '../../errors/auth.errors';
 import hashPassword from '../security/hash-password';
-
-export type UserAuthWithoutPassword = Pick<UserAuthData, 'email' | 'username'>;
 
 export function createUserAuthData(userAuthRepository: UserAuthRepository) {
   return {

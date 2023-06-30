@@ -1,4 +1,4 @@
-import type { UserAuthRepository } from '../auth.repository';
+import type { UserAuthRepository } from '../../interfaces/auth.interfaces';
 
 export default function inMemoryUserAuthRepository(): UserAuthRepository {
   return {
