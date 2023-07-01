@@ -1,31 +1,18 @@
 import { describe, test, expect, beforeEach } from 'vitest';
-import { createUserAuthData } from './create-user';
-import inMemoryUserAuthRepository from '../../repositories/in-memory/in-memory.auth.repository';
+import { signUpFactory } from './signup';
+import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.auth.repository';
 import {
   UserAuthRepository,
   UserAuthData,
   UserAuthWithoutPassword,
-} from '../../interfaces/auth.interfaces';
+} from '../../../interfaces/auth.interfaces';
+import {
+  userWithEmptyField,
+  userWithInvalidEmail,
+  validUser,
+} from '../../../tests-data/user';
 
-describe('Create UserAuthData', () => {
-  const validUser = {
-    username: 'John Doe',
-    email: 'jansen@gmail.com',
-    password: 'John1#',
-  };
-
-  const invalidUserEmptyField = {
-    username: 'John Doe',
-    email: 'johndoe',
-    password: '',
-  };
-
-  const userWithInvalidEmail = {
-    username: 'John Doe',
-    email: 'johndoe',
-    password: 'John1#',
-  };
-
+describe('Sign Up Service', () => {
   type Context = {
     inMemoryUserAuth: UserAuthRepository;
     createUserAuth: {
@@ -38,16 +25,16 @@ describe('Create UserAuthData', () => {
   beforeEach<Context>(async (ctx) => {
     const inMemoryUserAuth = inMemoryUserAuthRepository();
     ctx.inMemoryUserAuth = inMemoryUserAuth;
-    ctx.createUserAuth = createUserAuthData(inMemoryUserAuth);
+    ctx.createUserAuth = signUpFactory(inMemoryUserAuth);
   });
 
   it('should throw an InvalidArgumentError for empty fields', async ({
     createUserAuth,
     inMemoryUserAuth,
   }) => {
-    await expect(
-      createUserAuth.exec(invalidUserEmptyField),
-    ).rejects.toThrowError('Missing required field');
+    await expect(createUserAuth.exec(userWithEmptyField)).rejects.toThrowError(
+      'Missing required field',
+    );
 
     expect(inMemoryUserAuth.users).toEqual([]);
   });
