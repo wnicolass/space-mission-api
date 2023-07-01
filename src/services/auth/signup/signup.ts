@@ -3,14 +3,14 @@ import type {
   UserAuthData,
   UserAuthRepository,
   UserAuthWithoutPassword,
-} from '../../interfaces/auth.interfaces';
+} from '../../../interfaces/auth.interfaces';
 import {
   InvalidArgumentError,
   UserAlreadyExistsError,
-} from '../../errors/auth.errors';
-import hashPassword from '../security/hash-password';
+} from '../../../errors/auth.errors';
+import hashPassword from '../../security/hash-password';
 
-export function createUserAuthData(userAuthRepository: UserAuthRepository) {
+export function signUpFactory(userAuthRepository: UserAuthRepository) {
   return {
     async exec({
       username,

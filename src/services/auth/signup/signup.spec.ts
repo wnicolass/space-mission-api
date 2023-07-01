@@ -1,18 +1,18 @@
 import { describe, test, expect, beforeEach } from 'vitest';
-import { createUserAuthData } from './create-user';
-import inMemoryUserAuthRepository from '../../repositories/in-memory/in-memory.auth.repository';
+import { signUpFactory } from './signup';
+import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.auth.repository';
 import {
   UserAuthRepository,
   UserAuthData,
   UserAuthWithoutPassword,
-} from '../../interfaces/auth.interfaces';
+} from '../../../interfaces/auth.interfaces';
 import {
   userWithEmptyField,
   userWithInvalidEmail,
   validUser,
-} from '../../tests-data/user';
+} from '../../../tests-data/user';
 
-describe('Create UserAuthData', () => {
+describe('Sign Up Service', () => {
   type Context = {
     inMemoryUserAuth: UserAuthRepository;
     createUserAuth: {
@@ -25,7 +25,7 @@ describe('Create UserAuthData', () => {
   beforeEach<Context>(async (ctx) => {
     const inMemoryUserAuth = inMemoryUserAuthRepository();
     ctx.inMemoryUserAuth = inMemoryUserAuth;
-    ctx.createUserAuth = createUserAuthData(inMemoryUserAuth);
+    ctx.createUserAuth = signUpFactory(inMemoryUserAuth);
   });
 
   it('should throw an InvalidArgumentError for empty fields', async ({
