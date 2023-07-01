@@ -1,5 +1,9 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 export type SingUpController = {
-  exec(req: Request, res: Response): Promise<Response>;
+  exec(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> | any;
 };

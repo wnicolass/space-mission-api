@@ -1,3 +1,9 @@
+export const user = {
+  username: 'Some name',
+  email: 'jared@gmail.com',
+  password: 'some password',
+};
+
 export const validUser = {
   username: 'John Doe',
   email: 'jansen@gmail.com',
