@@ -1,4 +1,4 @@
-import { expect, it, describe, assert } from 'vitest';
+import { expect, it, describe } from 'vitest';
 import hashPassword from './hash-password';
 import { user } from '../../tests-data/user';
 import checkPasswords from './validate-password';
