@@ -1,6 +1,6 @@
 import { expect, it, describe } from 'vitest';
 import hashPassword from './hash-password';
-import { user } from '../../tests-data/user';
+import { user } from '../../../tests-data/user';
 import checkPasswords from './validate-password';
 
 describe('Password validation', () => {
