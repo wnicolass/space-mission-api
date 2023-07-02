@@ -8,7 +8,7 @@ import {
   InvalidArgumentError,
   UserAlreadyExistsError,
 } from '../../../errors/auth.errors';
-import hashPassword from '../../security/hash-password';
+import hashPassword from '../../security/hash/hash-password';
 
 export function signUpFactory(userAuthRepository: UserAuthRepository) {
   return {

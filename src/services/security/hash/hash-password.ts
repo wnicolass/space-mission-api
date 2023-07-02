@@ -1,5 +1,5 @@
 import { hash, genSalt } from 'bcryptjs';
-import { HashObject } from '../../interfaces/hash-service.interfaces';
+import { HashObject } from '../../../interfaces/hash-service.interfaces';
 
 export default async function hashPassword(
   incomingPassword: string,
