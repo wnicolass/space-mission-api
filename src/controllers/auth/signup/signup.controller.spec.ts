@@ -53,7 +53,7 @@ describe('Sign Up Controller', () => {
       );
     });
 
-    it('should respond with a 400 bad request for emails that already exists', async () => {
+    it('should respond with a 400 bad request for emails that already exist', async () => {
       const response = await request(app)
         .post(`${AUTH_URL}/signup`)
         .send(user)
