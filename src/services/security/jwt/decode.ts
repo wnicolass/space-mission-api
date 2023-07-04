@@ -10,6 +10,6 @@ export async function decodeJWT(jwt: string): Promise<JWTPayload> {
   const { payload } = await jose.jwtDecrypt(jwt, jwtSecret, {
     issuer: 'nasa-ts.api',
   });
-  console.log(payload);
+
   return { userId: payload.sub as string, email: payload.email as string };
 }
