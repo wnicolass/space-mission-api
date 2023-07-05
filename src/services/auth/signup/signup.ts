@@ -25,8 +25,8 @@ export function signUpFactory(userAuthRepository: UserAuthRepository) {
         throw new InvalidArgumentError('Invalid email');
       }
 
-      const userAlreadyExists = await userAuthRepository.getUserByEmail(email);
-      if (userAlreadyExists) {
+      const foundUser = await userAuthRepository.getUserByEmail(email);
+      if (foundUser) {
         throw new UserAlreadyExistsError(
           `User with email "${email}" already exists`,
         );

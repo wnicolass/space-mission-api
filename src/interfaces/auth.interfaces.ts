@@ -12,5 +12,5 @@ export type UserAuthWithoutPassword = Pick<UserAuthData, 'email' | 'username'>;
 export type UserAuthRepository = {
   users?: UserAuthData[];
   signup(data: SignUpData): Promise<void>;
-  getUserByEmail(email: string): Promise<boolean>;
+  getUserByEmail(email: string): Promise<UserAuthData | boolean>;
 };
