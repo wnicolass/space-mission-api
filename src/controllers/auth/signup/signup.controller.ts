@@ -1,8 +1,8 @@
 import { signUpFactory } from '../../../services/auth/signup/signup';
-import { SingUpController } from '../../../interfaces/controllers.interfaces';
+import { Controller } from '../../../interfaces/controllers.interfaces';
 import UserAuthRepositoryFactory from '../../../repositories/prisma/prisma-user-auth.repository';
 
-export default (function signUpController(): SingUpController {
+export default (function signUpController(): Controller {
   return {
     async exec(req, res, next) {
       try {
