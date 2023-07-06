@@ -4,6 +4,7 @@ export abstract class HTTPError extends Error {
     super(message);
   }
 }
+
 export class InvalidArgumentError extends HTTPError {
   constructor(public message: string, public statusCode: number = 400) {
     super(message);
