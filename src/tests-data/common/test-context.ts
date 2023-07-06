@@ -6,7 +6,7 @@ import {
 } from '../../interfaces/auth.interfaces';
 
 type AuthExec = {
-  exec: (data: UserAuthData) => Promise<UserAuthWithoutPassword | any>;
+  exec: (data: UserAuthData) => Promise<UserAuthWithoutPassword | string>;
 };
 
 export type AuthTestContext = {

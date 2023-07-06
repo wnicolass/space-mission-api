@@ -73,11 +73,11 @@ describe('Sign In Service', () => {
     inMemoryUserAuth.users?.push(user);
     expect(inMemoryUserAuth.users?.length).toBe(1);
 
-    const jwt: string = await createUserAuth.exec({
+    const jwt = (await createUserAuth.exec({
       username: 'random',
       email: 'jansen@gmail.com',
       password: 'John1#',
-    });
+    })) as string;
     expect(jwt).toBeTypeOf('string');
     expect(jwt.split('.').length).toBe(5);
   });
