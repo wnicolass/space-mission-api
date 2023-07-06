@@ -1,28 +1,16 @@
-import { describe, test, expect, beforeEach } from 'vitest';
+import { describe, expect, beforeEach } from 'vitest';
 import { signUpFactory } from './signup';
 import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.auth.repository';
-import {
-  UserAuthRepository,
-  UserAuthData,
-  UserAuthWithoutPassword,
-} from '../../../interfaces/auth.interfaces';
+import { AuthTestContext, it } from '../../../tests-data/common/test-context';
 import {
   userWithEmptyField,
   userWithInvalidEmail,
   validUser,
+  inDbUser,
 } from '../../../tests-data/user';
 
 describe('Sign Up Service', () => {
-  type Context = {
-    inMemoryUserAuth: UserAuthRepository;
-    createUserAuth: {
-      exec: (data: UserAuthData) => Promise<UserAuthWithoutPassword>;
-    };
-  };
-
-  const it = test<Context>;
-
-  beforeEach<Context>(async (ctx) => {
+  beforeEach<AuthTestContext>(async (ctx) => {
     const inMemoryUserAuth = inMemoryUserAuthRepository();
     ctx.inMemoryUserAuth = inMemoryUserAuth;
     ctx.createUserAuth = signUpFactory(inMemoryUserAuth);
@@ -54,7 +42,7 @@ describe('Sign Up Service', () => {
     createUserAuth,
     inMemoryUserAuth,
   }) => {
-    inMemoryUserAuth.users?.push(validUser);
+    inMemoryUserAuth.users?.push(inDbUser);
     await expect(createUserAuth.exec(validUser)).rejects.toThrowError(
       `User with email "${validUser.email}" already exists`,
     );
