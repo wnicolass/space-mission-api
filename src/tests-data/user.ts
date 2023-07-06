@@ -21,3 +21,17 @@ export const userWithInvalidEmail = {
   email: 'johndoe',
   password: 'John1#',
 };
+
+export const userWithId = {
+  id: '12scfsdafsdfhuh1',
+  username: 'John Doe',
+  email: 'jansen@gmail.com',
+  password: 'John1#',
+};
+
+export const inDbUser = {
+  id: '12scfsdafsdfhuh1',
+  username: 'John Doe',
+  email: 'jansen@gmail.com',
+  hashedPassword: 'fdsfdsfsdfs',
+};

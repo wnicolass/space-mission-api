@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import type { UserAuthRepository } from '../../interfaces/auth.interfaces';
+import type {
+  InDatabaseUser,
+  UserAuthRepository,
+} from '../../interfaces/auth.interfaces';
 
 export default function UserAuthRepositoryFactory(): UserAuthRepository {
   const prisma = new PrismaClient();
@@ -19,12 +22,12 @@ export default function UserAuthRepositoryFactory(): UserAuthRepository {
       });
     },
     async getUserByEmail(email) {
-      const user = await prisma.userAuthData.findUnique({
+      const user = (await prisma.userAuthData.findUnique({
         where: {
           email,
         },
-      });
-      return !!user;
+      })) as InDatabaseUser;
+      return user;
     },
   };
 }
