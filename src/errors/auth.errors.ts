@@ -15,3 +15,15 @@ export class UserAlreadyExistsError extends HTTPError {
     super(message);
   }
 }
+
+export class UserNotFoundError extends HTTPError {
+  constructor(public message: string, public statusCode: number = 404) {
+    super(message);
+  }
+}
+
+export class InvalidPasswordError extends HTTPError {
+  constructor(public message: string, public statusCode: number = 400) {
+    super(message);
+  }
+}
