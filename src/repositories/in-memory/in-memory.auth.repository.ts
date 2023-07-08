@@ -1,4 +1,7 @@
-import type { UserAuthRepository } from '../../interfaces/auth.interfaces';
+import type {
+  InDatabaseUser,
+  UserAuthRepository,
+} from '../../interfaces/auth.interfaces';
 
 export default function inMemoryUserAuthRepository(): UserAuthRepository {
   return {
@@ -14,7 +17,7 @@ export default function inMemoryUserAuthRepository(): UserAuthRepository {
         if (this.users) {
           const user = this.users.find((user) => user.email === email);
           if (user) {
-            return res(user);
+            return res(user as InDatabaseUser);
           }
           return res(false);
         }
