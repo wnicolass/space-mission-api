@@ -21,7 +21,7 @@ export type InDatabaseUser = {
 };
 
 export type UserAuthRepository = {
-  users?: InDatabaseUser[];
+  users?: (InDatabaseUser | SignUpData)[];
   signup(data: SignUpData): Promise<void>;
-  getUserByEmail(email: string): Promise<InDatabaseUser>;
+  getUserByEmail(email: string): Promise<InDatabaseUser | false>;
 };
