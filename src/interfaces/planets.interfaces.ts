@@ -3,5 +3,6 @@ export type Planet = {
 };
 
 export type PlanetRepository = {
-  getAll(): Planet[];
+  planets?: Planet[];
+  getAll(): Promise<Planet[]>;
 };

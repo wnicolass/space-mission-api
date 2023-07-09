@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
-import { HTTPError } from '../errors/auth.errors';
+import { HTTPError } from '../errors/base-http-error';
 
 export default function serverErrorHandler(
   err: ErrorRequestHandler,
