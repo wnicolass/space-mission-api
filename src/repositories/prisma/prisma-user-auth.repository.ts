@@ -4,7 +4,7 @@ import type {
   UserAuthRepository,
 } from '../../interfaces/auth.interfaces';
 
-export default function UserAuthRepositoryFactory(): UserAuthRepository {
+export default function userAuthRepositoryFactory(): UserAuthRepository {
   const prisma = new PrismaClient();
   return {
     async signup({ username, email, password }) {
