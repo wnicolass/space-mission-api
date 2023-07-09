@@ -1,9 +1,4 @@
-export abstract class HTTPError extends Error {
-  public abstract statusCode: number;
-  constructor(public message: string) {
-    super(message);
-  }
-}
+import { HTTPError } from './base-http-error';
 
 export class InvalidArgumentError extends HTTPError {
   constructor(public message: string, public statusCode: number = 400) {
