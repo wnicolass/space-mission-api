@@ -1,4 +1,4 @@
-# Nasa Mission Control API
+# Nasa Mission Control API :ringed_planet:
 
 To execute the project in dev mode, run:
 
