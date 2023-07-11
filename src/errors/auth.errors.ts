@@ -23,3 +23,15 @@ export class InvalidPasswordError extends HTTPError {
     super(message);
   }
 }
+
+export class UnauthorizedUserError extends HTTPError {
+  constructor(public message: string, public statusCode: number = 401) {
+    super(message);
+  }
+}
+
+export class BrokenHeaderError extends HTTPError {
+  constructor(public message: string, public statusCode: number = 400) {
+    super(message);
+  }
+}
