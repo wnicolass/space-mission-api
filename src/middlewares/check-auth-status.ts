@@ -3,8 +3,10 @@ import {
   BrokenHeaderError,
   UnauthorizedUserError,
 } from '../errors/auth.errors';
+import { decodeJWT } from '../services/security/jwt/decode';
+import { JWTPayload } from '../interfaces/jwt-service.interfaces';
 
-export default function checkAuthStatus(
+export default async function checkAuthStatus(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -16,10 +18,16 @@ export default function checkAuthStatus(
       throw new UnauthorizedUserError('Unauthorized user');
     }
 
-    const authHeaderArray = authorization.split(/\s/);
+    const authHeaderArray: string[] = authorization.split(/\s/);
     if (authHeaderArray.length !== 2) {
       throw new BrokenHeaderError('Authorization header in wrong format');
     }
+
+    const [, token] = authHeaderArray;
+    const payload: JWTPayload = await decodeJWT(token);
+    req.user = payload;
+
+    // TODO: check if user exists in database
 
     return next();
   } catch (err: unknown) {
