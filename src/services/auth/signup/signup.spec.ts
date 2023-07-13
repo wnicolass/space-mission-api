@@ -1,7 +1,7 @@
 import { describe, expect, beforeEach } from 'vitest';
 import { signUpFactory } from './signup';
 import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.auth.repository';
-import { AuthTestContext, it } from '../../../tests-data/common/test-context';
+import { AuthTestContext, it } from '../../../tests-data/utils/test-context';
 import {
   userWithEmptyField,
   userWithInvalidEmail,
