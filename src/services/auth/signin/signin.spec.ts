@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect } from 'vitest';
-import { AuthTestContext, it } from '../../../tests-data/common/test-context';
+import { AuthTestContext, it } from '../../../tests-data/utils/test-context';
 import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.auth.repository';
 import { signInFactory } from './signin';
 import {

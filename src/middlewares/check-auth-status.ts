@@ -2,9 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import {
   BrokenHeaderError,
   UnauthorizedUserError,
+  UserNotFoundError,
 } from '../errors/auth.errors';
 import { decodeJWT } from '../services/security/jwt/decode';
 import { JWTPayload } from '../interfaces/jwt-service.interfaces';
+import userAuthRepositoryFactory from '../repositories/prisma/prisma-user-auth.repository';
 
 export default async function checkAuthStatus(
   req: Request,
@@ -25,10 +27,14 @@ export default async function checkAuthStatus(
 
     const [, token] = authHeaderArray;
     const payload: JWTPayload = await decodeJWT(token);
+
+    const userRepository = userAuthRepositoryFactory();
+    const userFound = await userRepository.getUserByEmail(payload.email);
+    if (!userFound) {
+      throw new UserNotFoundError('User does not exist');
+    }
+
     req.user = payload;
-
-    // TODO: check if user exists in database
-
     return next();
   } catch (err: unknown) {
     return next(err);

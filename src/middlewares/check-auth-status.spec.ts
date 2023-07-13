@@ -4,6 +4,7 @@ import request from 'supertest';
 import checkAuthStatus from './check-auth-status';
 import serverErrorHandler from './server-error-handler';
 import { encodeJWT } from '../services/security/jwt/encode';
+import userAuthRepositoryFactory from '../repositories/prisma/prisma-user-auth.repository';
 
 describe('Test check authentication status', () => {
   const testApp = express();
@@ -38,8 +39,27 @@ describe('Test check authentication status', () => {
     });
   });
 
+  it('should respond with 404 if does not find user by email', async () => {
+    const jwt = await encodeJWT({ userId: '123', email: 'johndoe@gmail.com' });
+    const response = await request(testApp)
+      .get('/')
+      .set('Authorization', `Bearer ${jwt}`)
+      .expect(404)
+      .expect('Content-Type', /json/i);
+
+    expect(response.body).toStrictEqual({
+      error: 'User does not exist',
+    });
+  });
+
   it('should respond with 200 ok', async () => {
     const jwt = await encodeJWT({ userId: '123', email: 'johndoe@gmail.com' });
+    const userRepository = userAuthRepositoryFactory();
+    await userRepository.signup({
+      username: 'john',
+      email: 'johndoe@gmail.com',
+      password: '123',
+    });
     const response = await request(testApp)
       .get('/')
       .set('Authorization', `Bearer ${jwt}`)
