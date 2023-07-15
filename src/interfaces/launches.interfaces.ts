@@ -10,3 +10,9 @@ export type IncomingLaunch = {
 export type InDatabaseLaunch = IncomingLaunch & {
   launchId: string;
 };
+
+export type LaunchRepository = {
+  launches?: (InDatabaseLaunch | IncomingLaunch)[];
+  getAll: () => Promise<(InDatabaseLaunch | IncomingLaunch)[]>;
+  save: (newLaunch: IncomingLaunch) => Promise<void>;
+};
