@@ -1,7 +1,10 @@
 import { describe, expect, beforeEach, vi } from 'vitest';
 import { signUpFactory } from './signup';
 import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.user.repository';
-import { AuthTestContext, it } from '../../../tests-data/utils/test-context';
+import {
+  AuthTestContext,
+  it,
+} from '../../../tests-data/utils/auth-test-context';
 import {
   userWithEmptyField,
   userWithInvalidEmail,
@@ -10,7 +13,7 @@ import {
 } from '../../../tests-data/mocks/user';
 
 describe('Sign Up Service', () => {
-  beforeEach<AuthTestContext>(async (ctx) => {
+  beforeEach<AuthTestContext>((ctx) => {
     const inMemoryUserAuth = inMemoryUserAuthRepository();
     ctx.inMemoryUserAuth = inMemoryUserAuth;
     ctx.signUp = signUpFactory(inMemoryUserAuth);

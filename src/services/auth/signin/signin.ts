@@ -27,7 +27,7 @@ export function signInFactory(userAuthRepository: UserAuthRepository) {
       if (!user) {
         throw new UserNotFoundError('User does not exist');
       }
-      console.log(user);
+
       const passwordsMatch = await checkPasswords(
         password,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
