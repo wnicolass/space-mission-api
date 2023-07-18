@@ -3,7 +3,7 @@ import type {
   UserAuthData,
   UserAuthRepository,
   UserAuthWithoutPassword,
-} from '../../../interfaces/auth.interfaces';
+} from '../../../interfaces/user.interfaces';
 import {
   InvalidArgumentError,
   UserAlreadyExistsError,

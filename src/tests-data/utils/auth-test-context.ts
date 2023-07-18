@@ -3,7 +3,7 @@ import {
   UserAuthData,
   UserAuthRepository,
   UserAuthWithoutPassword,
-} from '../../interfaces/auth.interfaces';
+} from '../../interfaces/user.interfaces';
 
 type AuthExec = {
   exec: (data: UserAuthData) => Promise<UserAuthWithoutPassword | string>;
@@ -11,7 +11,8 @@ type AuthExec = {
 
 export type AuthTestContext = {
   inMemoryUserAuth: UserAuthRepository;
-  createUserAuth: AuthExec;
+  signUp: AuthExec;
+  signIn: AuthExec;
 };
 
 export const it = test<AuthTestContext>;

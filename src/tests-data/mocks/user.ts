@@ -1,3 +1,21 @@
+import { randomUUID } from 'node:crypto';
+
+export function createUserMock(
+  username: string,
+  email: string,
+  password?: string,
+  hashedPassword?: string,
+  userId: string = randomUUID(),
+) {
+  return {
+    userId,
+    username,
+    email,
+    password,
+    hashedPassword,
+  };
+}
+
 export const user = {
   username: 'Some name',
   email: 'jared@gmail.com',
@@ -30,7 +48,7 @@ export const userWithId = {
 };
 
 export const inDbUser = {
-  id: '12scfsdafsdfhuh1',
+  userId: '12scfsdafsdfhuh1',
   username: 'John Doe',
   email: 'jansen@gmail.com',
   hashedPassword: 'fdsfdsfsdfs',
