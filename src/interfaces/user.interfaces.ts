@@ -1,27 +1,24 @@
 export type SignUpData = {
-  id?: string;
   username: string;
   email: string;
   password: string;
   profileImageUrl?: string;
 };
 
-export type UserAuthData = Pick<
-  SignUpData,
-  'username' | 'email' | 'password' | 'id'
->;
+export type UserAuthData = Pick<SignUpData, 'username' | 'email' | 'password'>;
 
 export type UserAuthWithoutPassword = Pick<UserAuthData, 'email' | 'username'>;
 
 export type InDatabaseUser = {
-  userId?: string;
+  userId: string;
   username?: string;
   email: string;
-  hashedPassword: string;
+  hashedPassword?: string;
 };
 
 export type UserAuthRepository = {
-  users?: (InDatabaseUser | SignUpData)[];
+  users?: InDatabaseUser[];
   signup(data: SignUpData): Promise<void>;
-  getUserByEmail(email: string): Promise<InDatabaseUser | false>;
+  getUserByEmail(email: string): Promise<InDatabaseUser | void>;
+  getUserById(userId: string): Promise<InDatabaseUser | void>;
 };
