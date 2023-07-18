@@ -16,5 +16,10 @@ export function inMemoryLaunchRepository(): LaunchRepository {
         return res();
       });
     },
+    getLaunchByMission(mission) {
+      return new Promise((res) => {
+        res(this.launches?.find((launch) => launch.mission === mission));
+      });
+    },
   };
 }

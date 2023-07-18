@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { inMemoryLaunchRepository } from './in-memory.launch.repository';
 import { createLaunchMock } from '../../tests-data/mocks/launches';
 
@@ -23,5 +23,15 @@ describe('Launch Repository Tests', () => {
     );
     await sut.save(launchMock);
     expect(sut.launches).toHaveLength(1);
+  });
+
+  it('should return undefined if does not find launch by mission name', async () => {
+    const sut = createSut(inMemoryLaunchRepository);
+    const sutSpy = vi.spyOn(sut, 'getLaunchByMission');
+    const missionFound = await sut.getLaunchByMission(
+      'this mission does not exist',
+    );
+    expect(sutSpy).toBeCalledTimes(1);
+    expect(missionFound).toBeFalsy();
   });
 });
