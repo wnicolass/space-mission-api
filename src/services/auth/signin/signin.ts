@@ -7,7 +7,7 @@ import {
 import {
   UserAuthData,
   UserAuthRepository,
-} from '../../../interfaces/auth.interfaces';
+} from '../../../interfaces/user.interfaces';
 import checkPasswords from '../../security/hash/validate-password';
 import { JWTPayload } from '../../../interfaces/jwt-service.interfaces';
 import { encodeJWT } from '../../security/jwt/encode';
@@ -27,10 +27,11 @@ export function signInFactory(userAuthRepository: UserAuthRepository) {
       if (!user) {
         throw new UserNotFoundError('User does not exist');
       }
-
+      console.log(user);
       const passwordsMatch = await checkPasswords(
         password,
-        user.hashedPassword,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        user.hashedPassword!,
       );
       if (!passwordsMatch) {
         throw new InvalidPasswordError('Invalid password');

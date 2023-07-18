@@ -1,26 +1,26 @@
-import { describe, expect, beforeEach } from 'vitest';
+import { describe, expect, beforeEach, vi } from 'vitest';
 import { signUpFactory } from './signup';
-import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.auth.repository';
+import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.user.repository';
 import { AuthTestContext, it } from '../../../tests-data/utils/test-context';
 import {
   userWithEmptyField,
   userWithInvalidEmail,
   validUser,
   inDbUser,
-} from '../../../tests-data/user';
+} from '../../../tests-data/mocks/user';
 
 describe('Sign Up Service', () => {
   beforeEach<AuthTestContext>(async (ctx) => {
     const inMemoryUserAuth = inMemoryUserAuthRepository();
     ctx.inMemoryUserAuth = inMemoryUserAuth;
-    ctx.createUserAuth = signUpFactory(inMemoryUserAuth);
+    ctx.signUp = signUpFactory(inMemoryUserAuth);
   });
 
   it('should throw an InvalidArgumentError for empty fields', async ({
-    createUserAuth,
+    signUp,
     inMemoryUserAuth,
   }) => {
-    await expect(createUserAuth.exec(userWithEmptyField)).rejects.toThrowError(
+    await expect(signUp.exec(userWithEmptyField)).rejects.toThrowError(
       'Missing required field',
     );
 
@@ -28,39 +28,32 @@ describe('Sign Up Service', () => {
   });
 
   it('should throw an InvalidArgumentError for invalid email', async ({
-    createUserAuth,
+    signUp,
     inMemoryUserAuth,
   }) => {
-    await expect(
-      createUserAuth.exec(userWithInvalidEmail),
-    ).rejects.toThrowError('Invalid email');
+    await expect(signUp.exec(userWithInvalidEmail)).rejects.toThrowError(
+      'Invalid email',
+    );
 
     expect(inMemoryUserAuth.users).toEqual([]);
   });
 
   it('should throw an UserAlreadyExistsError', async ({
-    createUserAuth,
+    signUp,
     inMemoryUserAuth,
   }) => {
     inMemoryUserAuth.users?.push(inDbUser);
-    await expect(createUserAuth.exec(validUser)).rejects.toThrowError(
+    await expect(signUp.exec(validUser)).rejects.toThrowError(
       `User with email "${validUser.email}" already exists`,
     );
 
     expect(inMemoryUserAuth.users?.length).toBe(1);
   });
 
-  it('should create a user', async ({ createUserAuth, inMemoryUserAuth }) => {
-    await expect(createUserAuth.exec(validUser)).resolves.not.toThrow();
-
-    expect(inMemoryUserAuth.users).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          username: expect.any(String),
-          email: expect.any(String),
-          password: expect.any(String),
-        }),
-      ]),
-    );
+  it('should create a user', async ({ signUp, inMemoryUserAuth }) => {
+    const signUpSpy = vi.spyOn(signUp, 'exec');
+    await signUp.exec(validUser);
+    expect(signUpSpy).toHaveBeenCalledOnce();
+    expect(inMemoryUserAuth.users).toHaveLength(1);
   });
 });

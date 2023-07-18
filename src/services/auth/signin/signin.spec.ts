@@ -1,83 +1,80 @@
 import { beforeEach, describe, expect } from 'vitest';
 import { AuthTestContext, it } from '../../../tests-data/utils/test-context';
-import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.auth.repository';
+import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.user.repository';
 import { signInFactory } from './signin';
-import {
-  userWithEmptyField,
-  validUser,
-  userWithInvalidEmail,
-} from '../../../tests-data/user';
+import { createUserMock } from '../../../tests-data/mocks/user';
 import hashPassword from '../../security/hash/hash-password';
+import { UserAuthData } from '../../../interfaces/user.interfaces';
 
 describe('Sign In Service', () => {
   beforeEach<AuthTestContext>(async (ctx) => {
     const inMemoryUserAuth = inMemoryUserAuthRepository();
     ctx.inMemoryUserAuth = inMemoryUserAuth;
-    ctx.createUserAuth = signInFactory(inMemoryUserAuth);
+    ctx.signIn = signInFactory(inMemoryUserAuth);
   });
 
   it('should throw an InvalidArgumentError if missing required fields', async ({
-    createUserAuth,
+    signIn,
   }) => {
-    await expect(createUserAuth.exec(userWithEmptyField)).rejects.toThrowError(
+    const userMock = createUserMock(
+      'tester',
+      'jansen@gmail.com',
+      '',
+    ) as UserAuthData;
+    await expect(signIn.exec(userMock)).rejects.toThrowError(
       'Missing required field',
     );
   });
 
   it('should throw an InvalidArgumentError if email is not valid', async ({
-    createUserAuth,
+    signIn,
   }) => {
-    await expect(
-      createUserAuth.exec(userWithInvalidEmail),
-    ).rejects.toThrowError('Invalid email');
+    const userMock = createUserMock('tester', 'jansen', 'test') as UserAuthData;
+    await expect(signIn.exec(userMock)).rejects.toThrowError('Invalid email');
   });
 
   it('should throw a UserNotFoundError if does not find user by email', async ({
-    createUserAuth,
+    signIn,
   }) => {
-    await expect(createUserAuth.exec(validUser)).rejects.toThrowError(
+    const userMock = createUserMock(
+      'tester',
+      'jansen@gmail.com',
+      'testpass',
+    ) as UserAuthData;
+    await expect(signIn.exec(userMock)).rejects.toThrowError(
       'User does not exist',
     );
   });
 
   it('should throw an InvalidPasswordError if passwords do not match', async ({
-    createUserAuth,
+    signIn,
     inMemoryUserAuth,
   }) => {
     const { hashedPassword } = await hashPassword('John1#');
-    expect(hashedPassword).toBeTypeOf('string');
-    const user = {
-      email: 'jansen@gmail.com',
+    const userMock = createUserMock(
+      'tester',
+      'jansen@gmail.com',
+      'wrongpass',
       hashedPassword,
-    };
-    inMemoryUserAuth.users?.push(user);
-    expect(inMemoryUserAuth.users?.length).toBe(1);
+    );
+    inMemoryUserAuth.users?.push(userMock);
 
-    await expect(
-      createUserAuth.exec({
-        username: 'random',
-        email: 'jansen@gmail.com',
-        password: 'wrong123',
-      }),
-    ).rejects.toThrowError('Invalid password');
+    await expect(signIn.exec(userMock as UserAuthData)).rejects.toThrowError(
+      'Invalid password',
+    );
   });
 
-  it('should return a jwt', async ({ createUserAuth, inMemoryUserAuth }) => {
+  it('should return a jwt', async ({ signIn, inMemoryUserAuth }) => {
     const { hashedPassword } = await hashPassword('John1#');
-    expect(hashedPassword).toBeTypeOf('string');
-    const user = {
-      userId: 'fdsfdsfsdfsd',
-      email: 'jansen@gmail.com',
+    const userMock = createUserMock(
+      'tester',
+      'jansen@gmail.com',
+      'John1#',
       hashedPassword,
-    };
-    inMemoryUserAuth.users?.push(user);
-    expect(inMemoryUserAuth.users?.length).toBe(1);
+    );
+    inMemoryUserAuth.users?.push(userMock);
 
-    const jwt = (await createUserAuth.exec({
-      username: 'random',
-      email: 'jansen@gmail.com',
-      password: 'John1#',
-    })) as string;
+    const jwt = (await signIn.exec(userMock as UserAuthData)) as string;
     expect(jwt).toBeTypeOf('string');
     expect(jwt.split('.').length).toBe(5);
   });
