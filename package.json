@@ -10,7 +10,8 @@
     "build:start": "npm run build && npm start",
     "test": "dotenv -e .env.test -- npx prisma migrate reset --force && dotenv -e .env.test -- vitest run",
     "test:dev": "dotenv -e .env.test -- vitest --watch",
-    "test:migrate": "dotenv -e .env.test -- npx prisma migrate dev"
+    "test:migrate": "dotenv -e .env.test -- npx prisma migrate dev",
+    "ci": "npm install && npm build:start"
   },
   "keywords": [],
   "author": "Nicolas Lima",
