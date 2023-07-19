@@ -11,7 +11,8 @@
     "test": "dotenv -e .env.test -- npx prisma migrate reset --force && dotenv -e .env.test -- vitest run",
     "test:dev": "dotenv -e .env.test -- vitest --watch",
     "test:migrate": "dotenv -e .env.test -- npx prisma migrate dev",
-    "ci": "npm install && npm run build:start"
+    "ci": "npm install && npm run build:start",
+    "ci:test": "npx prisma migrate reset --force && vitest run"
   },
   "keywords": [],
   "author": "Nicolas Lima",
