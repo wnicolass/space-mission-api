@@ -31,8 +31,8 @@ jobs:
       - name: Generate random 32 byte long
         id: secret
         run: |
-          jwt_secret=$(openssl rand -hex 32)
-          echo "::set-output name=jwt_secret::$jwt_secret"
+          random_secret=$(openssl rand -hex 32)
+          echo "jwt_secret=random_secret" >> $GITHUB_OUTPUT
       - run: npm ci
       - run: npm run ci:test
         env:
