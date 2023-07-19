@@ -26,9 +26,16 @@ jobs:
           database: nasa-tests
           port: 5432
         id: postgres
+      - name: Setup openssl
+        run: sudo apt-get install -y openssl
+      - name: Generate random 32 byte long
+        id: secret
+        run: |
+          jwt_secret=$(openssl rand -hex 32)
+          echo "::set-output name=jwt_secret::$jwt_secret"
       - run: npm ci
       - run: npm run ci:test
         env:
           DATABASE_URL: ${{ steps.postgres.outputs.connection-uri }}
-          JWT_SECRET: secretsecretsecret3times
+          JWT_SECRET: ${{ steps.secret.outputs.jwt_secret }}
           JWT_ENC_ALG: A128CBC-HS256
