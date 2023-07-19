@@ -8,6 +8,9 @@ jobs:
   build:
     env:
       DATABASE_URL: somerandomdatabase
+      PORT: 3000
+      JWT_SECRET: secretsecretsecret3times
+      JWT_ENC_ALG: A128CBC-HS256
     strategy:
       matrix:
         node-version: [16.x, 18.x]
