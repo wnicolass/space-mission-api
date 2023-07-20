@@ -1,7 +1,7 @@
 {
-  "name": "nasa-ts",
+  "name": "space-mission-api",
   "version": "1.0.0",
-  "description": "Nasa mission control project based on the NASA ztm's course project",
+  "description": "Space mission API project based on the NASA Mission Control ztm's project.",
   "main": "index.js",
   "scripts": {
     "start": "node dist/server.js",

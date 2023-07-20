@@ -33,10 +33,9 @@ jobs:
         run: |
           jwt_secret=$(openssl rand -base64 32)
           echo "$jwt_secret" >> $GITHUB_OUTPUT
-          echo "$jwt_secret"
       - run: npm ci
       - run: npm run ci:test
         env:
           DATABASE_URL: ${{ steps.postgres.outputs.connection-uri }}
-          JWT_SECRET: cjoHfLedZBr/U7mfV5Mz1O5nJU/covpvrbx2GljDJCo=
+          JWT_SECRET: ${{ steps.secret.outputs.jwt_secret }}
           JWT_ENC_ALG: A128CBC-HS256
