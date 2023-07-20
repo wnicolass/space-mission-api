@@ -28,14 +28,15 @@ jobs:
         id: postgres
       - name: Setup openssl
         run: sudo apt-get install -y openssl
-      - name: Generate random 32 byte long
+      - name: Generate JWT secret
         id: secret
         run: |
           random_secret=$(openssl rand -base64 32)
           echo "jwt_secret=random_secret" >> $GITHUB_OUTPUT
+          echo "$(jwt_secret)"
       - run: npm ci
       - run: npm run ci:test
         env:
           DATABASE_URL: ${{ steps.postgres.outputs.connection-uri }}
-          JWT_SECRET: ${{ steps.secret.outputs.jwt_secret }}
+          JWT_SECRET: cjoHfLedZBr/U7mfV5Mz1O5nJU/covpvrbx2GljDJCo=
           JWT_ENC_ALG: A128CBC-HS256
