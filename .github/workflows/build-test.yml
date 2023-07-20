@@ -31,8 +31,9 @@ jobs:
       - name: Generate JWT secret
         id: secret
         run: |
-          jwt_secret=$(openssl rand -base64 32)
-          echo "$jwt_secret" >> $GITHUB_OUTPUT
+          random_secret=$(openssl rand -base64 32)
+          echo "::add-mask::$random_secret"
+          echo "jwt_secret=$random_secret" >> "$GITHUB_OUTPUT"
       - run: npm ci
       - run: npm run ci:test
         env:
