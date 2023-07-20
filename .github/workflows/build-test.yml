@@ -33,7 +33,8 @@ jobs:
         run: |
           random_secret=$(openssl rand -base64 32)
           echo "jwt_secret=random_secret" >> $GITHUB_OUTPUT
-          echo "$(jwt_secret)"
+          echo "$jwt_secret"
+          echo $GITHUB_OUTPUT
       - run: npm ci
       - run: npm run ci:test
         env:
