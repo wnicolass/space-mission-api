@@ -1,7 +1,7 @@
 {
-  "name": "nasa-ts",
+  "name": "space-mission-api",
   "version": "1.0.0",
-  "description": "Nasa mission control project based on the NASA ztm's course project",
+  "description": "Space mission API project based on the NASA Mission Control ztm's project.",
   "main": "index.js",
   "scripts": {
     "start": "node dist/server.js",
@@ -10,7 +10,9 @@
     "build:start": "npm run build && npm start",
     "test": "dotenv -e .env.test -- npx prisma migrate reset --force && dotenv -e .env.test -- vitest run",
     "test:dev": "dotenv -e .env.test -- vitest --watch",
-    "test:migrate": "dotenv -e .env.test -- npx prisma migrate dev"
+    "test:migrate": "dotenv -e .env.test -- npx prisma migrate dev",
+    "ci": "npm install && npm run build:start",
+    "ci:test": "npx prisma migrate reset --force && vitest run"
   },
   "keywords": [],
   "author": "Nicolas Lima",
@@ -19,7 +21,7 @@
     "seed": "ts-node --transpile-only prisma/seed.ts"
   },
   "engines": {
-    "node": "v20.0.0"
+    "node": ">=16.0.0"
   },
   "devDependencies": {
     "@tsconfig/node20": "^1.0.1",

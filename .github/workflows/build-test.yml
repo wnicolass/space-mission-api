@@ -1,0 +1,42 @@
+name: Space Mission API CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node.js version ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Setup PostgreSQL database
+        uses: ikalnytskyi/action-setup-postgres@v4
+        with:
+          username: ci
+          password: testing
+          database: nasa-tests
+          port: 5432
+        id: postgres
+      - name: Setup openssl
+        run: sudo apt-get install -y openssl
+      - name: Generate JWT secret
+        id: secret
+        run: |
+          random_secret=$(openssl rand -base64 32)
+          echo "::add-mask::$random_secret"
+          echo "jwt_secret=$random_secret" >> "$GITHUB_OUTPUT"
+      - run: npm ci
+      - run: npm run ci:test
+        env:
+          DATABASE_URL: ${{ steps.postgres.outputs.connection-uri }}
+          JWT_SECRET: ${{ steps.secret.outputs.jwt_secret }}
+          JWT_ENC_ALG: A128CBC-HS256

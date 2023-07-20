@@ -2,13 +2,22 @@ import { describe, expect, it } from 'vitest';
 import request from 'supertest';
 import app from '../../../app';
 import {
-  user,
   userWithEmptyField,
   userWithInvalidEmail,
   validUser,
 } from '../../../tests-data/mocks/user';
 import { PrismaClient } from '@prisma/client';
 import hashPassword from '../../../services/security/hash/hash-password';
+
+async function createDbUserMock(email: string, hashedPassword: string) {
+  const prisma = new PrismaClient();
+  await prisma.userAuthData.create({
+    data: {
+      email,
+      hashedPassword,
+    },
+  });
+}
 
 describe('Sign In Controller', () => {
   const AUTH_URL = '/v1/auth';
@@ -38,7 +47,7 @@ describe('Sign In Controller', () => {
       });
     });
 
-    it('should respond with a 404 not found for users that does not exist', async () => {
+    it('should respond with a 404 not found for a user that does not exist', async () => {
       const response = await request(app)
         .post(`${AUTH_URL}/signin`)
         .send(validUser)
@@ -52,13 +61,7 @@ describe('Sign In Controller', () => {
 
     it('should respond with a 400 bad request when passwords do not match', async () => {
       const { hashedPassword } = await hashPassword('Jansen1#');
-      const prisma = new PrismaClient();
-      await prisma.userAuthData.create({
-        data: {
-          email: 'jansen@gmail.com',
-          hashedPassword,
-        },
-      });
+      await createDbUserMock('jansen@gmail.com', hashedPassword);
       const response = await request(app)
         .post(`${AUTH_URL}/signin`)
         .send(validUser)
@@ -71,9 +74,11 @@ describe('Sign In Controller', () => {
     });
 
     it('should respond 200 ok with a jwt access token', async () => {
+      const { hashedPassword } = await hashPassword('Jonas1#');
+      await createDbUserMock('jonasburgo@gmail.com', hashedPassword);
       const response = await request(app)
         .post(`${AUTH_URL}/signin`)
-        .send(user)
+        .send({ email: 'jonasburgo@gmail.com', password: 'Jonas1#' })
         .expect('Content-Type', /json/)
         .expect(200);
 
