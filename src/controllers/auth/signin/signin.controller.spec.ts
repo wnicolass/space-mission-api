@@ -5,7 +5,7 @@ import {
   userWithEmptyField,
   userWithInvalidEmail,
   validUser,
-} from '../../../tests-data/mocks/user';
+} from '../../../tests/mocks/user';
 import { PrismaClient } from '@prisma/client';
 import hashPassword from '../../../services/security/hash/hash-password';
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import inMemoryPlanetRepository from './in-memory.planet.repository';
-import { planets } from '../../tests-data/planet';
+import { planets } from '../../tests/mocks/planet';
 
 describe('Planets Repository Tests', () => {
   const planetRepository = inMemoryPlanetRepository();

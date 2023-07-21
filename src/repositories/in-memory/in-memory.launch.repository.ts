@@ -10,7 +10,7 @@ export function inMemoryLaunchRepository(): LaunchRepository {
         }
       });
     },
-    save(newLaunch) {
+    save(newLaunch, userId) {
       return new Promise((res) => {
         this.launches?.push(newLaunch);
         return res();

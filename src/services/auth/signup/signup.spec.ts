@@ -1,16 +1,13 @@
 import { describe, expect, beforeEach, vi } from 'vitest';
 import { signUpFactory } from './signup';
 import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.user.repository';
-import {
-  AuthTestContext,
-  it,
-} from '../../../tests-data/utils/auth-test-context';
+import { AuthTestContext, it } from '../../../tests/utils/auth-test-context';
 import {
   userWithEmptyField,
   userWithInvalidEmail,
   validUser,
   inDbUser,
-} from '../../../tests-data/mocks/user';
+} from '../../../tests/mocks/user';
 
 describe('Sign Up Service', () => {
   beforeEach<AuthTestContext>((ctx) => {
