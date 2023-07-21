@@ -6,6 +6,7 @@ export type IncomingLaunch = {
   rocket: string;
   launchDate: string;
   planet: Planet;
+  userId: string;
 };
 
 export type InDatabaseLaunch = IncomingLaunch & {
@@ -14,11 +15,9 @@ export type InDatabaseLaunch = IncomingLaunch & {
 
 export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
-  getAll: () =>
-    | Promise<(InDatabaseLaunch | IncomingLaunch)[]>
-    | Promise<Launch[]>;
-  save: (newLaunch: IncomingLaunch, userId: string) => Promise<void>;
+  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | Launch[]>;
+  save: (newLaunch: IncomingLaunch) => Promise<void>;
   getLaunchByMission: (
     mission: string,
-  ) => Promise<InDatabaseLaunch | void> | Promise<Launch | null>;
+  ) => Promise<InDatabaseLaunch | void | Launch | null>;
 };

@@ -10,7 +10,7 @@ export function inMemoryLaunchRepository(): LaunchRepository {
         }
       });
     },
-    save(newLaunch, userId) {
+    save(newLaunch) {
       return new Promise((res) => {
         this.launches?.push(newLaunch);
         return res();
@@ -18,7 +18,7 @@ export function inMemoryLaunchRepository(): LaunchRepository {
     },
     getLaunchByMission(mission) {
       return new Promise((res) => {
-        res(this.launches?.find((launch) => launch.mission === mission));
+        return res(this.launches?.find((launch) => launch.mission === mission));
       });
     },
   };

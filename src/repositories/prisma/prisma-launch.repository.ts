@@ -14,7 +14,7 @@ export default function launchRepositoryFactory(): LaunchRepository {
         },
       });
     },
-    async save(newLaunch, userId) {
+    async save(newLaunch) {
       await prisma.launch.create({
         data: {
           mission: newLaunch.mission,
@@ -28,7 +28,7 @@ export default function launchRepositoryFactory(): LaunchRepository {
             create: {
               user: {
                 connect: {
-                  userId: userId,
+                  userId: newLaunch.userId,
                 },
               },
               launchDate: newLaunch.launchDate,

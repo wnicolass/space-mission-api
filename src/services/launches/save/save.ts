@@ -18,10 +18,13 @@ export function saveLaunchFactory(
   planetRepository: PlanetRepository,
 ) {
   return {
-    async exec(
-      { mission, launchDate, planet, rocket }: IncomingLaunch,
-      userId: string,
-    ) {
+    async exec({
+      mission,
+      launchDate,
+      planet,
+      rocket,
+      userId,
+    }: IncomingLaunch) {
       if (!isValidDate(launchDate)) {
         throw new InvalidLaunchDateError('Invalid launch date');
       }
@@ -50,8 +53,9 @@ export function saveLaunchFactory(
         planet,
         launchDate,
         rocket,
+        userId,
       };
-      await launchRepository.save(newLaunch, userId);
+      await launchRepository.save(newLaunch);
     },
   };
 }

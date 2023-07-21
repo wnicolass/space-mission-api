@@ -2,22 +2,12 @@ import { describe, expect, it } from 'vitest';
 import request from 'supertest';
 import app from '../../../app';
 import {
+  createDbUserMock,
   userWithEmptyField,
   userWithInvalidEmail,
   validUser,
 } from '../../../tests/mocks/user';
-import { PrismaClient } from '@prisma/client';
 import hashPassword from '../../../services/security/hash/hash-password';
-
-async function createDbUserMock(email: string, hashedPassword: string) {
-  const prisma = new PrismaClient();
-  await prisma.userAuthData.create({
-    data: {
-      email,
-      hashedPassword,
-    },
-  });
-}
 
 describe('Sign In Controller', () => {
   const AUTH_URL = '/v1/auth';

@@ -6,6 +6,7 @@ export function createLaunchMock(
   mission: string,
   rocket: string,
   launchDate: string,
+  userId: string,
   planet: Planet = createPlanetMock(),
 ): IncomingLaunch {
   return {
@@ -13,5 +14,6 @@ export function createLaunchMock(
     rocket,
     launchDate,
     planet,
+    userId,
   };
 }
