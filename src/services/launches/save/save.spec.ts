@@ -23,12 +23,13 @@ function createSut(
     userRepository,
     planetRepository,
   );
+  const userMock = createUserMock('Test', 'testuser@mail.com');
   const launchMock = createLaunchMock(
     'Test mission',
     'Test Rocker IIC',
     '2023-12-12',
+    userMock.userId,
   );
-  const userMock = createUserMock('Test', 'testuser@mail.com');
   return { sut, launchMock, userMock };
 }
 
@@ -51,9 +52,7 @@ describe('Save Launch Service', () => {
     );
     userRepository.users?.push(userMock);
     launchMock.launchDate = '1999-12-13';
-    expect(sut.exec(launchMock, userMock.userId)).rejects.toThrowError(
-      'Invalid launch date',
-    );
+    expect(sut.exec(launchMock)).rejects.toThrowError('Invalid launch date');
   });
 
   it('should throw a LaunchAlreadyExistsError', async ({
@@ -61,14 +60,14 @@ describe('Save Launch Service', () => {
     userRepository,
     planetRepository,
   }) => {
-    const { sut, launchMock, userMock } = createSut(
+    const { sut, launchMock } = createSut(
       launchesRepository,
       userRepository,
       planetRepository,
     );
     launchesRepository.launches?.push(launchMock);
 
-    expect(sut.exec(launchMock, userMock.userId)).rejects.toThrowError(
+    expect(sut.exec(launchMock)).rejects.toThrowError(
       `Launch with mission name "${launchMock.mission}" already exists`,
     );
   });
@@ -78,14 +77,12 @@ describe('Save Launch Service', () => {
     userRepository,
     planetRepository,
   }) => {
-    const { sut, launchMock, userMock } = createSut(
+    const { sut, launchMock } = createSut(
       launchesRepository,
       userRepository,
       planetRepository,
     );
-    expect(sut.exec(launchMock, userMock.userId)).rejects.toThrowError(
-      'User not found',
-    );
+    expect(sut.exec(launchMock)).rejects.toThrowError('User not found');
   });
 
   it('should throw a PlanetNotFoundError if invalid planet is provided', async ({
@@ -101,8 +98,6 @@ describe('Save Launch Service', () => {
     userRepository.users?.push(userMock);
     launchMock.planet.planetName =
       'I am sure that this is not an habitable planet';
-    expect(sut.exec(launchMock, userMock.userId)).rejects.toThrowError(
-      'Invalid planet',
-    );
+    expect(sut.exec(launchMock)).rejects.toThrowError('Invalid planet');
   });
 });
