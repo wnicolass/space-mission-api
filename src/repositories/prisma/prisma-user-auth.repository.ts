@@ -29,5 +29,16 @@ export default function userAuthRepositoryFactory(): UserAuthRepository {
       })) as InDatabaseUser;
       return user;
     },
+    async getUserById(userId) {
+      const user = await prisma.userAuthData.findUnique({
+        where: {
+          userId,
+        },
+      });
+      if (user) {
+        return user;
+      }
+      return;
+    },
   };
 }
