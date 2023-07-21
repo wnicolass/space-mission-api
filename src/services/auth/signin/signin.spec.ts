@@ -1,11 +1,8 @@
 import { beforeEach, describe, expect } from 'vitest';
-import {
-  AuthTestContext,
-  it,
-} from '../../../tests-data/utils/auth-test-context';
+import { AuthTestContext, it } from '../../../tests/utils/auth-test-context';
 import inMemoryUserAuthRepository from '../../../repositories/in-memory/in-memory.user.repository';
 import { signInFactory } from './signin';
-import { createUserMock } from '../../../tests-data/mocks/user';
+import { createUserMock } from '../../../tests/mocks/user';
 import hashPassword from '../../security/hash/hash-password';
 import { UserAuthData } from '../../../interfaces/user.interfaces';
 

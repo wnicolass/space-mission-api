@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { inMemoryLaunchRepository } from './in-memory.launch.repository';
-import { createLaunchMock } from '../../tests-data/mocks/launches';
+import { createLaunchMock } from '../../tests/mocks/launches';
 
 function createSut<T>(repo: () => T): T {
   const sut = repo();
@@ -21,7 +21,7 @@ describe('Launch Repository Tests', () => {
       'Test rocket',
       '2023-12-04',
     );
-    await sut.save(launchMock);
+    await sut.save(launchMock, 'safaf');
     expect(sut.launches).toHaveLength(1);
   });
 

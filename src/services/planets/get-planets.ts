@@ -1,4 +1,4 @@
-import { PlanetsNotFoundError } from '../../errors/planet.errors';
+import { PlanetNotFoundError } from '../../errors/planet.errors';
 import type {
   Planet,
   PlanetRepository,
@@ -9,7 +9,7 @@ export function getAllPlanetsFactory(planetRepository: PlanetRepository) {
     async exec(): Promise<Planet[]> {
       const planets = await planetRepository.getAll();
       if (!planets.length) {
-        throw new PlanetsNotFoundError('No planets were found');
+        throw new PlanetNotFoundError('No planets were found');
       }
 
       return planetRepository.getAll();

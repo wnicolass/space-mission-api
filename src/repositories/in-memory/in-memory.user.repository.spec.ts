@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import inMemoryUserAuthRepository from './in-memory.user.repository';
-import { validUser } from '../../tests-data/mocks/user';
+import { validUser } from '../../tests/mocks/user';
 import { InDatabaseUser } from '../../interfaces/user.interfaces';
 
 describe('User Authentication Repository', () => {

@@ -5,7 +5,7 @@ import {
   userWithEmptyField,
   userWithInvalidEmail,
   user,
-} from '../../../tests-data/mocks/user';
+} from '../../../tests/mocks/user';
 
 describe('Sign Up Controller', () => {
   const AUTH_URL = '/v1/auth';
