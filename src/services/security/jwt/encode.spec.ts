@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { encodeJWT } from './encode';
-import { badPayload, payload } from '../../../tests-data/jwt';
+import { badPayload, payload } from '../../../tests/mocks/jwt';
 
 describe('Encoding JWT functionality', () => {
   it('should throw a TypeError if the payload values are not of type string', async () => {
