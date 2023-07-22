@@ -1,5 +1,5 @@
 import { LaunchRepository } from '../../interfaces/launches.interfaces';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, UserLaunch } from '@prisma/client';
 
 export default function launchRepositoryFactory(): LaunchRepository {
   const prisma = new PrismaClient();
@@ -34,6 +34,20 @@ export default function launchRepositoryFactory(): LaunchRepository {
               launchDate: new Date(newLaunch.launchDate),
             },
           },
+        },
+      });
+    },
+    async join(launchId, userId) {
+      const launch = (await prisma.userLaunch.findFirst({
+        where: {
+          launchId,
+        },
+      })) as UserLaunch;
+      await prisma.userLaunch.create({
+        data: {
+          userId,
+          launchId,
+          launchDate: new Date(launch.launchDate),
         },
       });
     },

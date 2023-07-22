@@ -11,6 +11,7 @@ export type IncomingLaunch = {
 
 export type InDatabaseLaunch = IncomingLaunch & {
   launchId?: string;
+  users?: string[];
 };
 
 export type LaunchRepository = {
@@ -20,4 +21,5 @@ export type LaunchRepository = {
   getLaunchByMission: (
     mission: string,
   ) => Promise<InDatabaseLaunch | void | Launch | null>;
+  join: (launchId: string, userId: string) => Promise<void>;
 };
