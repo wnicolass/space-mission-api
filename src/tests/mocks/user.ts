@@ -18,13 +18,22 @@ export function createUserMock(
   };
 }
 
-export async function createDbUserMock(email: string, password: string) {
+export async function createDbUserMock(
+  email: string,
+  password: string,
+  username: string,
+) {
   const prisma = new PrismaClient();
   const { hashedPassword } = await hashPassword(password);
   return await prisma.userAuthData.create({
     data: {
       email,
       hashedPassword,
+      userProfileData: {
+        create: {
+          username,
+        },
+      },
     },
   });
 }
