@@ -64,8 +64,7 @@ describe('Sign In Controller', () => {
     });
 
     it('should respond 200 ok with a jwt access token', async () => {
-      const { hashedPassword } = await hashPassword('Jonas1#');
-      await createDbUserMock('jonasburgo@gmail.com', hashedPassword);
+      await createDbUserMock('jonasburgo@gmail.com', 'Jonas1#');
       const response = await request(app)
         .post(`${AUTH_URL}/signin`)
         .send({ email: 'jonasburgo@gmail.com', password: 'Jonas1#' })
