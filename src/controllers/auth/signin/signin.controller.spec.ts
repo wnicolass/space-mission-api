@@ -51,7 +51,7 @@ describe('Sign In Controller', () => {
 
     it('should respond with a 400 bad request when passwords do not match', async () => {
       const { hashedPassword } = await hashPassword('Jansen1#');
-      await createDbUserMock('jansen@gmail.com', hashedPassword);
+      await createDbUserMock('jansen@gmail.com', hashedPassword, 'jansen');
       const response = await request(app)
         .post(`${AUTH_URL}/signin`)
         .send(validUser)
@@ -64,7 +64,7 @@ describe('Sign In Controller', () => {
     });
 
     it('should respond 200 ok with a jwt access token', async () => {
-      await createDbUserMock('jonasburgo@gmail.com', 'Jonas1#');
+      await createDbUserMock('jonasburgo@gmail.com', 'Jonas1#', 'jonas');
       const response = await request(app)
         .post(`${AUTH_URL}/signin`)
         .send({ email: 'jonasburgo@gmail.com', password: 'Jonas1#' })
