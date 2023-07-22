@@ -31,7 +31,7 @@ export default function launchRepositoryFactory(): LaunchRepository {
                   userId: newLaunch.userId,
                 },
               },
-              launchDate: newLaunch.launchDate,
+              launchDate: new Date(newLaunch.launchDate),
             },
           },
         },

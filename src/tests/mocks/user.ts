@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { randomUUID } from 'node:crypto';
+import hashPassword from '../../services/security/hash/hash-password';
 
 export function createUserMock(
   username: string,
@@ -17,12 +18,22 @@ export function createUserMock(
   };
 }
 
-export async function createDbUserMock(email: string, hashedPassword: string) {
+export async function createDbUserMock(
+  email: string,
+  password: string,
+  username: string,
+) {
   const prisma = new PrismaClient();
+  const { hashedPassword } = await hashPassword(password);
   return await prisma.userAuthData.create({
     data: {
       email,
       hashedPassword,
+      userProfileData: {
+        create: {
+          username,
+        },
+      },
     },
   });
 }
