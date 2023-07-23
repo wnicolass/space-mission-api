@@ -1,4 +1,4 @@
-import { Launch } from '@prisma/client';
+import { Launch, UserLaunch } from '@prisma/client';
 import { Planet } from './planets.interfaces';
 
 export type IncomingLaunch = {
@@ -12,6 +12,13 @@ export type IncomingLaunch = {
 export type InDatabaseLaunch = IncomingLaunch & {
   launchId?: string;
   users?: string[];
+};
+
+export type UserLaunchRepository = {
+  expeditions?: UserLaunch[];
+  getExpeditionByLaunchId: (
+    launchId: string,
+  ) => Promise<UserLaunch | undefined>;
 };
 
 export type LaunchRepository = {
