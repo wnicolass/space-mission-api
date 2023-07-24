@@ -11,3 +11,9 @@ export class LaunchAlreadyExistsError extends HTTPError {
     super(message);
   }
 }
+
+export class LaunchNotFoundError extends HTTPError {
+  constructor(public message: string, public statusCode: number = 404) {
+    super(message);
+  }
+}

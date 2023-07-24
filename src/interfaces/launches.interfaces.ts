@@ -21,6 +21,11 @@ export type UserLaunchRepository = {
   ) => Promise<UserLaunch | undefined>;
 };
 
+export type JoinExpeditionInfo = {
+  launchId: string;
+  userId: string;
+};
+
 export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
   getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | Launch[]>;
