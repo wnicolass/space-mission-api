@@ -21,6 +21,7 @@ export type UserLaunchRepository = {
     launchId: string,
     userId: string,
   ) => Promise<UserLaunch | null>;
+  joinLaunch: (launchId: string, userId: string) => Promise<void>;
 };
 
 export type JoinExpeditionInfo = {
