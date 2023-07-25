@@ -22,6 +22,12 @@ export function joinLaunchFactory(userLaunchRepository: UserLaunchRepository) {
       if (userAlreadyJoined) {
         throw new UserAlreadyJoinedError('User already joined');
       }
+
+      await userLaunchRepository.joinLaunch(
+        launchId,
+        userId,
+        expeditionFound.launchDate,
+      );
     },
   };
 }

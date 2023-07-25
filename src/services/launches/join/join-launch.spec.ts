@@ -39,4 +39,13 @@ describe('Join Launch Service', () => {
       'User already joined',
     );
   });
+
+  it('should should join a user on an existing launch', async () => {
+    const joinExpeditionMock = createJoinExpeditionMock(
+      '123',
+      '987',
+      new Date('2023-12-12'),
+    );
+    await expect(sut.exec(joinExpeditionMock)).resolves.not.toThrow();
+  });
 });
