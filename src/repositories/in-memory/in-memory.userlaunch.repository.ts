@@ -14,5 +14,17 @@ export function inMemoryUserLaunchRepository(): UserLaunchRepository {
         return null;
       });
     },
+    getExpeditionByLaunchAndUserId(launchId, userId) {
+      return new Promise((res) => {
+        const expedition = this.expeditions?.find(
+          (expedition) =>
+            expedition.launchId === launchId && expedition.userId === userId,
+        );
+        if (expedition) {
+          return res(expedition);
+        }
+        return null;
+      });
+    },
   };
 }
