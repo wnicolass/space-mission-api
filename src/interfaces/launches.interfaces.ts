@@ -17,6 +17,10 @@ export type InDatabaseLaunch = IncomingLaunch & {
 export type UserLaunchRepository = {
   expeditions?: UserLaunch[];
   getExpeditionByLaunchId: (launchId: string) => Promise<UserLaunch | null>;
+  getExpeditionByLaunchAndUserId: (
+    launchId: string,
+    userId: string,
+  ) => Promise<UserLaunch | null>;
 };
 
 export type JoinExpeditionInfo = {
