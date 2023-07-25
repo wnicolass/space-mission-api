@@ -26,4 +26,20 @@ describe('In Memory UserLaunch Repository', () => {
       sut.getExpeditionByLaunchAndUserId('123', '321'),
     ).resolves.toStrictEqual(expeditionMock);
   });
+
+  it('should join a user on an existing launch', async () => {
+    const expeditionMock = {
+      userId: '456',
+      launchId: '654',
+      launchDate: new Date('2025-12-12'),
+    };
+    expect(
+      sut.joinLaunch(
+        expeditionMock.launchId,
+        expeditionMock.userId,
+        expeditionMock.launchDate,
+      ),
+    ).resolves.not.toThrow();
+    expect(sut.expeditions?.length).toBeGreaterThanOrEqual(1);
+  });
 });

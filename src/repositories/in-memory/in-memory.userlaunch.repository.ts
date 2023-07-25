@@ -26,5 +26,16 @@ export function inMemoryUserLaunchRepository(): UserLaunchRepository {
         return res(null);
       });
     },
+    joinLaunch(launchId, userId) {
+      return new Promise((res) => {
+        const newUser = {
+          launchId,
+          userId,
+          launchDate: new Date(Date.now()),
+        };
+        this.expeditions?.push(newUser);
+        return res();
+      });
+    },
   };
 }
