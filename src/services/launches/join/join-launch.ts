@@ -1,3 +1,4 @@
+import { UserAlreadyJoinedError } from '../../../errors/auth.errors';
 import { LaunchNotFoundError } from '../../../errors/launch.errors';
 import {
   JoinExpeditionInfo,
@@ -6,11 +7,20 @@ import {
 
 export function joinLaunchFactory(userLaunchRepository: UserLaunchRepository) {
   return {
-    exec({ launchId, userId }: JoinExpeditionInfo) {
+    async exec({ launchId, userId }: JoinExpeditionInfo) {
       const expeditionFound =
-        userLaunchRepository.getExpeditionByLaunchId(launchId);
+        await userLaunchRepository.getExpeditionByLaunchId(launchId);
       if (!expeditionFound) {
         throw new LaunchNotFoundError(`Launch not found`);
+      }
+
+      const userAlreadyJoined =
+        await userLaunchRepository.getExpeditionByLaunchAndUserId(
+          launchId,
+          userId,
+        );
+      if (userAlreadyJoined) {
+        throw new UserAlreadyJoinedError('User already joined');
       }
     },
   };
