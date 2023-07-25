@@ -11,7 +11,7 @@ export function inMemoryUserLaunchRepository(): UserLaunchRepository {
         if (expedition) {
           return res(expedition);
         }
-        return null;
+        return res(null);
       });
     },
     getExpeditionByLaunchAndUserId(launchId, userId) {
@@ -23,7 +23,7 @@ export function inMemoryUserLaunchRepository(): UserLaunchRepository {
         if (expedition) {
           return res(expedition);
         }
-        return null;
+        return res(null);
       });
     },
   };
