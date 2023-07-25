@@ -5,11 +5,13 @@ export function inMemoryUserLaunchRepository(): UserLaunchRepository {
     expeditions: [],
     getExpeditionByLaunchId(launchId) {
       return new Promise((res) => {
-        res(
-          this.expeditions?.find(
-            (expedition) => expedition.launchId === launchId,
-          ),
+        const expedition = this.expeditions?.find(
+          (expedition) => expedition.launchId === launchId,
         );
+        if (expedition) {
+          return res(expedition);
+        }
+        return null;
       });
     },
   };
