@@ -19,5 +19,14 @@ export default function userLaunchRepositoryFactory(): UserLaunchRepository {
         },
       });
     },
+    async joinLaunch(launchId, userId, launchDate) {
+      await prisma.userLaunch.create({
+        data: {
+          userId,
+          launchId,
+          launchDate,
+        },
+      });
+    },
   };
 }
