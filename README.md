@@ -3,8 +3,8 @@
 To execute the project in dev mode, run:
 
 ```bash
-npm install # install all packages on both server and client folders
-npm run start:dev # execute both client and server projects
+npm install # install all packages
+npm run start:dev # execute project on dev mode
 ```
 
 The API should be running at localhost:3000
