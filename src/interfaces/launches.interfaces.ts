@@ -36,7 +36,7 @@ export type JoinExpeditionInfo = {
 export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
   getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | Launch[]>;
-  save: (newLaunch: IncomingLaunch) => Promise<void>;
+  save: (newLaunch: IncomingLaunch) => Promise<void | Launch>;
   getLaunchByMission: (
     mission: string,
   ) => Promise<InDatabaseLaunch | void | Launch | null>;

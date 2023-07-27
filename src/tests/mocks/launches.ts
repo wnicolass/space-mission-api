@@ -2,6 +2,7 @@ import { IncomingLaunch } from '../../interfaces/launches.interfaces';
 import launchRepositoryFactory from '../../repositories/prisma/prisma-launch.repository';
 import { Planet } from '../../interfaces/planets.interfaces';
 import { createPlanetMock } from './planets';
+import { Launch } from '@prisma/client';
 
 export function createLaunchMock(
   mission: string,
@@ -25,7 +26,7 @@ export async function createDbLaunchMock(
   launchDate: string,
   userId: string,
   planet: Planet = createPlanetMock(),
-): Promise<void> {
+): Promise<void | Launch> {
   const launchRepository = launchRepositoryFactory();
   const newLaunch = {
     mission,
@@ -34,6 +35,5 @@ export async function createDbLaunchMock(
     userId,
     planet,
   };
-  await launchRepository.save(newLaunch);
-  return;
+  return await launchRepository.save(newLaunch);
 }
