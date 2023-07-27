@@ -15,7 +15,7 @@ export default function launchRepositoryFactory(): LaunchRepository {
       });
     },
     async save(newLaunch) {
-      await prisma.launch.create({
+      return await prisma.launch.create({
         data: {
           mission: newLaunch.mission,
           rocket: newLaunch.rocket,
