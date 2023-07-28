@@ -41,5 +41,5 @@ export type LaunchRepository = {
     mission: string,
   ) => Promise<InDatabaseLaunch | void | Launch | null>;
   join: (launchId: string, userId: string) => Promise<void>;
-  abortLaunch: (launchId: string) => Promise<void>;
+  abort: (launchId: string) => Promise<void>;
 };
