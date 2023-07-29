@@ -1,8 +1,8 @@
 import { LaunchRepository } from '../../interfaces/launches.interfaces';
-import { PrismaClient, UserLaunch } from '@prisma/client';
+import { UserLaunch } from '@prisma/client';
+import prisma from '../../../prisma/client-singleton';
 
 export default function launchRepositoryFactory(): LaunchRepository {
-  const prisma = new PrismaClient();
   return {
     async getAll() {
       return await prisma.launch.findMany();
