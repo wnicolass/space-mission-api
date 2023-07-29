@@ -1,6 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from './client-singleton';
 import getHabitablePlanets from '../data/planet.handler';
-const prisma = new PrismaClient();
 
 async function main(): Promise<void> {
   const planets: string[] = await getHabitablePlanets();

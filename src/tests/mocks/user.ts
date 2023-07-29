@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../../prisma/client-singleton';
 import { randomUUID } from 'node:crypto';
 import hashPassword from '../../services/security/hash/hash-password';
 
@@ -23,7 +23,6 @@ export async function createDbUserMock(
   password: string,
   username: string,
 ) {
-  const prisma = new PrismaClient();
   const { hashedPassword } = await hashPassword(password);
   return await prisma.userAuthData.create({
     data: {

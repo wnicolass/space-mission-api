@@ -1,11 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../../prisma/client-singleton';
 import type {
   InDatabaseUser,
   UserAuthRepository,
 } from '../../interfaces/user.interfaces';
 
 export default function userAuthRepositoryFactory(): UserAuthRepository {
-  const prisma = new PrismaClient();
   return {
     async signup({ username, email, password }) {
       const userAuth = await prisma.userAuthData.create({
