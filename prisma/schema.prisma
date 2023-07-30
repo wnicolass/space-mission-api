@@ -11,47 +11,54 @@ datasource db {
 }
 
 model UserAuthData {
-  userId          String        @id @default(uuid())
-  email           String        @db.VarChar(255) @unique
-  hashedPassword  String        @db.VarChar(255)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  userId          String       @id @default(uuid())
+  email           String       @unique @db.VarChar(255)
+  hashedPassword  String       @db.VarChar(255)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
   userProfileData UserProfile?
 }
 
 model UserProfile {
-  userId          String        @id
-  username        String        @db.VarChar(255)
-  profileImageUrl String?       @db.VarChar(255)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  userAuthData    UserAuthData  @relation(fields: [userId], references: [userId])
+  userId          String       @id
+  username        String       @db.VarChar(255)
+  profileImageUrl String?      @db.VarChar(255)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  userAuthData    UserAuthData @relation(fields: [userId], references: [userId])
   launches        UserLaunch[]
 }
 
 model UserLaunch {
-  user            UserProfile   @relation(fields: [userId], references: [userId])
-  userId          String
-  launch          Launch        @relation(fields: [launchId], references: [launchId])
-  launchId        String
-  launchDate      DateTime      @db.Date
+  user       UserProfile @relation(fields: [userId], references: [userId])
+  userId     String
+  launch     Launch      @relation(fields: [launchId], references: [launchId])
+  launchId   String
+  launchDate DateTime    @db.Date
 
   @@id([userId, launchId])
 }
 
 model Launch {
-  launchId        String        @id @default(uuid())
-  mission         String        @db.VarChar(255)
-  rocket          String        @db.VarChar(255)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  planetId        String        @db.VarChar(255)
-  planet          Planet        @relation(fields: [planetId], references: [planetId])
-  users           UserLaunch[]
+  launchId  String       @id @default(uuid())
+  mission   String       @db.VarChar(255)
+  rocket    String       @db.VarChar(255)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  planetId  String       @db.VarChar(255)
+  planet    Planet       @relation(fields: [planetId], references: [planetId])
+  users     UserLaunch[]
 }
 
 model Planet {
-  planetId        String        @id @default(uuid())
-  planetName      String        @db.VarChar(255) @unique
-  launches        Launch[]
+  planetId   String   @id @default(uuid())
+  planetName String   @unique @db.VarChar(255)
+  launches   Launch[]
+}
+
+model LaunchesHistory {
+  id         String   @id @default(uuid())
+  launchId   String   @db.VarChar(255)
+  userId     String   @db.VarChar(255)
+  launchDate DateTime @db.Date
 }
