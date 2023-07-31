@@ -51,5 +51,13 @@ export default function launchRepositoryFactory(): LaunchRepository {
         },
       });
     },
+    async abort(launchId) {
+      await prisma.launch.delete({
+        where: {
+          launchId,
+        },
+      });
+      return;
+    },
   };
 }
