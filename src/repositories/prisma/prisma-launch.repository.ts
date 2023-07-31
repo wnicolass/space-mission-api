@@ -5,7 +5,13 @@ import prisma from '../../../prisma/client-singleton';
 export default function launchRepositoryFactory(): LaunchRepository {
   return {
     async getAll() {
-      return await prisma.launch.findMany();
+      return await prisma.launch.findMany({
+        select: {
+          mission: true,
+          rocket: true,
+          users: true,
+        },
+      });
     },
     async getLaunchByMission(mission) {
       return await prisma.launch.findFirst({

@@ -1,4 +1,4 @@
-import { Launch, UserLaunch } from '@prisma/client';
+import { Launch, UserLaunch, UserProfile } from '@prisma/client';
 import { Planet } from './planets.interfaces';
 
 export type IncomingLaunch = {
@@ -33,9 +33,17 @@ export type JoinExpeditionInfo = {
   userId: string;
 };
 
+export type LaunchFromDatabase = {
+  mission: string;
+  rocket: string;
+  users: UserProfile[];
+};
+
 export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
-  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | Launch[]>;
+  getAll: () => Promise<
+    (IncomingLaunch | InDatabaseLaunch)[] | LaunchFromDatabase[]
+  >;
   save: (newLaunch: IncomingLaunch) => Promise<void | Launch>;
   getLaunchByMission: (
     mission: string,
