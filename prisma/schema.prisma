@@ -57,7 +57,7 @@ model Planet {
 }
 
 model LaunchesHistory {
-  id         String   @id @default(uuid())
+  id         String   @id
   launchId   String   @db.VarChar(255)
   userId     String   @db.VarChar(255)
   launchDate DateTime @db.Date
