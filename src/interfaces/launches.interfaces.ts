@@ -42,7 +42,7 @@ export type LaunchInfo = {
 
 export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
-  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | LaunchInfo>;
+  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | LaunchInfo[]>;
   save: (newLaunch: IncomingLaunch) => Promise<void | Launch>;
   getLaunchByMission: (
     mission: string,
