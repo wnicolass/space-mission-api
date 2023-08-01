@@ -33,7 +33,7 @@ export default function launchRepositoryFactory(): LaunchRepository {
             },
           },
         },
-      })) as unknown as LaunchInfo;
+      })) as unknown as LaunchInfo[];
     },
     async getLaunchByMission(mission) {
       return await prisma.launch.findFirst({
