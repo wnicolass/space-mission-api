@@ -30,9 +30,9 @@ model UserProfile {
 }
 
 model UserLaunch {
-  user       UserProfile @relation(fields: [userId], references: [userId])
+  user       UserProfile @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId     String
-  launch     Launch      @relation(fields: [launchId], references: [launchId])
+  launch     Launch      @relation(fields: [launchId], references: [launchId], onDelete: Cascade)
   launchId   String
   launchDate DateTime    @db.Date
 
