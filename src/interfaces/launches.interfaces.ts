@@ -33,17 +33,16 @@ export type JoinExpeditionInfo = {
   userId: string;
 };
 
-export type LaunchFromDatabase = {
-  mission: string;
-  rocket: string;
-  users: UserProfile[];
+export type LaunchInfo = {
+  launchDate: string;
+  launch: Pick<Launch, 'mission' | 'rocket'> &
+    Pick<UserProfile, 'username' | 'userId'> &
+    Planet;
 };
 
 export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
-  getAll: () => Promise<
-    (IncomingLaunch | InDatabaseLaunch)[] | LaunchFromDatabase[]
-  >;
+  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | LaunchInfo>;
   save: (newLaunch: IncomingLaunch) => Promise<void | Launch>;
   getLaunchByMission: (
     mission: string,
