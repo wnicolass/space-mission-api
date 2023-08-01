@@ -50,4 +50,18 @@ describe('Launch Repository Tests', () => {
     await sut.join(launchMock.launchId, 'fdsfdsfsd');
     expect(launchMock.users).toHaveLength(1);
   });
+
+  it('should remove a launch by id', async () => {
+    const sut = createSut(inMemoryLaunchRepository);
+    const launchMock = createLaunchMock(
+      'Test mission 2',
+      'Tester IIC-3',
+      '2023-11-11',
+      'fsfdsfssdfsd',
+    ) as InDatabaseLaunch;
+    launchMock.launchId = 'removeMe';
+    sut.launches?.push(launchMock);
+    await sut.abort('removeMe');
+    expect(sut.launches).toHaveLength(0);
+  });
 });

@@ -34,5 +34,15 @@ export function inMemoryLaunchRepository(): LaunchRepository {
         return res();
       });
     },
+    abort(launchId) {
+      return new Promise((res) => {
+        this.launches?.forEach((launch: InDatabaseLaunch, i) => {
+          if (launch.launchId === launchId) {
+            this.launches?.splice(i, 1);
+            return res();
+          }
+        });
+      });
+    },
   };
 }
