@@ -42,11 +42,14 @@ export type LaunchInfo = {
 
 export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
-  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | LaunchInfo[]>;
   save: (newLaunch: IncomingLaunch) => Promise<void | Launch>;
+  join: (launchId: string, userId: string) => Promise<void>;
+  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | LaunchInfo[]>;
+  getLaunchById: (
+    launchId: string,
+  ) => Promise<InDatabaseLaunch | void | Launch | null>;
   getLaunchByMission: (
     mission: string,
   ) => Promise<InDatabaseLaunch | void | Launch | null>;
-  join: (launchId: string, userId: string) => Promise<void>;
   abort: (launchId: string) => Promise<void>;
 };
