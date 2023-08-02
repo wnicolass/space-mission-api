@@ -37,6 +37,22 @@ describe('Launch Repository Tests', () => {
     expect(missionFound).toBeFalsy();
   });
 
+  it('should get a launch by id', async () => {
+    const sut = createSut(inMemoryLaunchRepository);
+    const launchMock = createLaunchMock(
+      'The mission',
+      'The rocket',
+      '2023-12-12',
+      'fsfdsfssdfsd',
+    ) as InDatabaseLaunch;
+    launchMock.launchId = 'someId';
+    sut.launches?.push(launchMock);
+    const sutSpy = vi.spyOn(sut, 'getLaunchById');
+    const missionFound = await sut.getLaunchById('someId');
+    expect(sutSpy).toBeCalledTimes(1);
+    expect(missionFound).toStrictEqual(launchMock);
+  });
+
   it('should add a new userId to the launch users array', async () => {
     const sut = createSut(inMemoryLaunchRepository);
     const launchMock = createLaunchMock(
