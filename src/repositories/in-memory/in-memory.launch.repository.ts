@@ -6,22 +6,10 @@ import {
 export function inMemoryLaunchRepository(): LaunchRepository {
   return {
     launches: [],
-    getAll() {
-      return new Promise((res) => {
-        if (this.launches) {
-          return res(this.launches);
-        }
-      });
-    },
     save(newLaunch) {
       return new Promise((res) => {
         this.launches?.push(newLaunch);
         return res();
-      });
-    },
-    getLaunchByMission(mission) {
-      return new Promise((res) => {
-        return res(this.launches?.find((launch) => launch.mission === mission));
       });
     },
     join(launchId, userId) {
@@ -32,6 +20,27 @@ export function inMemoryLaunchRepository(): LaunchRepository {
         launch.users = [];
         launch.users?.push(userId);
         return res();
+      });
+    },
+    getAll() {
+      return new Promise((res) => {
+        if (this.launches) {
+          return res(this.launches);
+        }
+      });
+    },
+    getLaunchById(launchId) {
+      return new Promise((res) => {
+        return res(
+          this.launches?.find(
+            (launch: InDatabaseLaunch) => launch.launchId === launchId,
+          ),
+        );
+      });
+    },
+    getLaunchByMission(mission) {
+      return new Promise((res) => {
+        return res(this.launches?.find((launch) => launch.mission === mission));
       });
     },
     abort(launchId) {
