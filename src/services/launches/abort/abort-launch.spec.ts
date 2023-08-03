@@ -7,9 +7,9 @@ import { InDatabaseLaunch } from '../../../interfaces/launches.interfaces';
 describe('Get All Launches Service', () => {
   it('should throw an LaunchNotFoundError if no launches were found', async () => {
     const launchesRepository = inMemoryLaunchRepository();
-    const getAllLaunchesService = abortLaunchFactory(launchesRepository);
-    await expect(getAllLaunchesService.exec('fakeId')).rejects.toThrowError(
-      'No launches were found',
+    const abortLaunchService = abortLaunchFactory(launchesRepository);
+    await expect(abortLaunchService.exec('fakeId')).rejects.toThrowError(
+      'Launch not found',
     );
   });
 

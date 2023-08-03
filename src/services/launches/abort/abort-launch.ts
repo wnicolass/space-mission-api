@@ -7,7 +7,7 @@ export function abortLaunchFactory(launchesRepository: LaunchRepository) {
       const launch = await launchesRepository.getLaunchById(launchId);
 
       if (!launch) {
-        throw new LaunchNotFoundError('No launches were found');
+        throw new LaunchNotFoundError('Launch not found');
       }
 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
