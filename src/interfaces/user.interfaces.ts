@@ -1,13 +1,8 @@
-export type SignUpData = {
+export type UserAuthData = {
   username: string;
   email: string;
   password: string;
-  profileImageUrl?: string;
 };
-
-export type UserAuthData = Pick<SignUpData, 'username' | 'email' | 'password'>;
-
-export type UserAuthWithoutPassword = Pick<UserAuthData, 'email' | 'username'>;
 
 export type InDatabaseUser = {
   userId: string;
@@ -18,7 +13,9 @@ export type InDatabaseUser = {
 
 export type UserAuthRepository = {
   users?: InDatabaseUser[];
-  signup(data: SignUpData): Promise<void>;
+  signup(data: UserAuthData): Promise<void>;
   getUserByEmail(email: string): Promise<InDatabaseUser | void>;
   getUserById(userId: string): Promise<InDatabaseUser | void>;
 };
+
+export type UserAuthWithoutPassword = Pick<UserAuthData, 'email' | 'username'>;
