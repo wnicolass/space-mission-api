@@ -34,5 +34,22 @@ export default function inMemoryUserAuthRepository(): UserAuthRepository {
         res(this.users?.find((user) => user.userId === userId));
       });
     },
+    updateProfile(userId, newData) {
+      return new Promise((res) => {
+        this.users?.forEach((user) => {
+          if (user.userId === userId) {
+            const updatedUserData = {
+              ...user,
+              ...newData,
+            };
+            user = updatedUserData;
+            return res({
+              username: updatedUserData.username,
+              profileImageUrl: updatedUserData.profileImageUrl,
+            });
+          }
+        });
+      });
+    },
   };
 }
