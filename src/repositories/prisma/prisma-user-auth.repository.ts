@@ -2,6 +2,7 @@ import prisma from '../../../prisma/client-singleton';
 import type {
   InDatabaseUser,
   UserAuthRepository,
+  UserProfile,
 } from '../../interfaces/user.interfaces';
 
 export default function userAuthRepositoryFactory(): UserAuthRepository {
@@ -38,6 +39,21 @@ export default function userAuthRepositoryFactory(): UserAuthRepository {
         return user;
       }
       return;
+    },
+    async updateProfile(userId, newData) {
+      return (await prisma.userProfile.update({
+        data: {
+          username: newData.username,
+          profileImageUrl: newData.profileImageUrl,
+        },
+        where: {
+          userId,
+        },
+        select: {
+          username: true,
+          profileImageUrl: true,
+        },
+      })) as UserProfile;
     },
   };
 }
