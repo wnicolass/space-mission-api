@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import inMemoryUserAuthRepository from './in-memory.user.repository';
-import { validUser } from '../../tests/mocks/user';
-import { InDatabaseUser } from '../../interfaces/user.interfaces';
+import { validUser, createUserMock } from '../../tests/mocks/user';
+import { InDatabaseUser, UserProfile } from '../../interfaces/user.interfaces';
 
 describe('User Authentication Repository', () => {
   const sut = inMemoryUserAuthRepository();
@@ -28,7 +28,6 @@ describe('User Authentication Repository', () => {
   });
 
   it('should find an existing user by id', async () => {
-    await sut.signup(validUser);
     const user = (await sut.getUserByEmail(validUser.email)) as InDatabaseUser;
     await expect(sut.getUserById(user.userId)).resolves.toEqual(
       expect.objectContaining({
@@ -37,5 +36,20 @@ describe('User Authentication Repository', () => {
         username: validUser.username,
       }),
     );
+  });
+
+  it('should update user profile data', async () => {
+    const userMock = createUserMock(
+      'Tester',
+      'testarino@gmail.com',
+      'testarineiro',
+    );
+    sut.users?.push(userMock);
+    const newUserData: UserProfile = {
+      username: 'Updated username',
+      profileImageUrl: 'https://someplace.com',
+    };
+    const updatedUser = await sut.updateProfile(userMock.userId, newUserData);
+    expect(updatedUser).toStrictEqual(newUserData);
   });
 });
