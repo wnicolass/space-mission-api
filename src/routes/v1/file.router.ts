@@ -7,7 +7,7 @@ export default (function fileRouter(): Router {
   const router = Router();
 
   router.use(checkAuthStatus);
-  router.post('/', upload.single('profile_image'), fileController.exec);
+  router.post('/', upload.single('profileImage'), fileController.exec);
 
   return router;
 })();
