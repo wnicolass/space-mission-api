@@ -9,7 +9,6 @@ export default (function uploadFileController(): Controller {
         const userRepository = userAuthRepositoryFactory();
         const uploadFileService = uploadFileFactory(userRepository);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        console.log(file);
         await uploadFileService.exec(body.userId, file!.buffer);
         return res
           .status(200)
