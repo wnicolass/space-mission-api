@@ -40,3 +40,6 @@ jobs:
           DATABASE_URL: ${{ steps.postgres.outputs.connection-uri }}
           JWT_SECRET: ${{ steps.secret.outputs.jwt_secret }}
           JWT_ENC_ALG: A128CBC-HS256
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
