@@ -13,7 +13,7 @@ export type InDatabaseUser = {
 };
 
 export type UserProfile = {
-  username: string;
+  username?: string;
   profileImageUrl: string;
 };
 
