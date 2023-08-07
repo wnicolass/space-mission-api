@@ -25,6 +25,23 @@ describe('File Controller', () => {
   });
 
   describe('POST /files', async () => {
+    it('should respond with a 400 bad request for invalid images', async () => {
+      const response = await request(app)
+        .post(FILES_URL)
+        .set('authorization', `Bearer ${jwt}`)
+        .field('userId', dbUserMock.userId)
+        .attach(
+          'profileImage',
+          join(__dirname, '..', '..', 'tests', 'files', 'invalid-file.mp4'),
+        )
+        .expect('Content-Type', /json/i)
+        .expect(400);
+
+      expect(response.body).toStrictEqual({
+        error: 'Invalid extension type',
+      });
+    });
+
     it('should respond with a 200 ok for valid images', async () => {
       const response = await request(app)
         .post(FILES_URL)
