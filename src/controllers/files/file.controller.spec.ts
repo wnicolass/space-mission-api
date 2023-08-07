@@ -1,11 +1,12 @@
-import { describe, it, expect, beforeAll } from 'vitest';
 import { join } from 'node:path';
-import request from 'supertest';
-import app from '../../app';
-import { createDbUserMock } from '../../tests/mocks/user';
-import userAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
-import { signInFactory } from '../../services/auth/signin/signin';
 import { UserAuthData } from '@prisma/client';
+import { describe, it, expect, beforeAll } from 'vitest';
+import request from 'supertest';
+import { signInFactory } from '../../services/auth/signin/signin';
+import { createDbUserMock } from '../../tests/mocks/user';
+import app from '../../app';
+import userAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
+import { cleanUpCloudinary } from '../../tests/utils/cleanup-cloudinary';
 
 describe('File Controller', () => {
   const FILES_URL = '/v1/files';
@@ -38,7 +39,9 @@ describe('File Controller', () => {
 
       expect(response.body).toStrictEqual({
         message: 'Successfully updated profile image',
+        publicId: expect.any(String),
       });
+      cleanUpCloudinary(response.body.publicId);
     });
   });
 });
