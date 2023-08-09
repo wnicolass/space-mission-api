@@ -13,7 +13,8 @@
     "test:migrate": "dotenv -e .env.test -- npx prisma migrate dev",
     "test:coverage": "dotenv -e .env.test -- npx prisma migrate reset --force && dotenv -e .env.test -- vitest run --coverage",
     "ci": "npm install && npm run build:start",
-    "ci:test": "npx prisma migrate reset --force && vitest run"
+    "ci:test": "npx prisma migrate reset --force && vitest run",
+    "cert": "ts-node ./src/config/https/generate-cert.ts"
   },
   "keywords": [],
   "author": "Nicolas Lima",

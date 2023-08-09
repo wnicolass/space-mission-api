@@ -1,11 +1,10 @@
-import { Server } from 'node:http';
+import { createServer } from 'node:https';
+import { tlsConfig } from './config/https/server-config';
 import app from './app';
 
-(function createServer(): void {
+(function startServer(): void {
   const { PORT } = process.env;
 
-  const server: Server = app.listen(PORT);
-  server.once('listening', () =>
-    console.log(`Server listening on port ${PORT}`),
-  );
+  const server = createServer(tlsConfig, app);
+  server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 })();
