@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "typeRoots": ["typings", "./node_modules/@types"]
   }
 }
