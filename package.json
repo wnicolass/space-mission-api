@@ -56,6 +56,8 @@
   },
   "dependencies": {
     "@apollo/server": "^4.9.1",
+    "@graphql-tools/load-files": "^7.0.0",
+    "@graphql-tools/schema": "^10.0.0",
     "@prisma/client": "^4.15.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.40.0",
