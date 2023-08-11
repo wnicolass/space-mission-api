@@ -36,6 +36,12 @@ export class UnauthorizedUserError extends HTTPError {
   }
 }
 
+export class ForbiddenError extends HTTPError {
+  constructor(public message: string, public statusCode: number = 403) {
+    super(message);
+  }
+}
+
 export class BrokenHeaderError extends HTTPError {
   constructor(public message: string, public statusCode: number = 400) {
     super(message);
