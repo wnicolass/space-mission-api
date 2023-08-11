@@ -12,6 +12,19 @@ export type IncomingLaunch = {
 export type InDatabaseLaunch = IncomingLaunch & {
   launchId?: string;
   users?: string[];
+  createdBy?: string;
+};
+
+export type JoinExpeditionInfo = {
+  launchId: string;
+  userId: string;
+};
+
+export type LaunchInfo = {
+  launchDate: string;
+  launch: Pick<Launch, 'mission' | 'rocket'> &
+    Pick<UserProfile, 'username' | 'userId'> &
+    Planet;
 };
 
 export type UserLaunchRepository = {
@@ -28,18 +41,6 @@ export type UserLaunchRepository = {
   ) => Promise<void>;
 };
 
-export type JoinExpeditionInfo = {
-  launchId: string;
-  userId: string;
-};
-
-export type LaunchInfo = {
-  launchDate: string;
-  launch: Pick<Launch, 'mission' | 'rocket'> &
-    Pick<UserProfile, 'username' | 'userId'> &
-    Planet;
-};
-
 export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
   save: (newLaunch: IncomingLaunch) => Promise<void | Launch>;
@@ -51,5 +52,5 @@ export type LaunchRepository = {
   getLaunchByMission: (
     mission: string,
   ) => Promise<InDatabaseLaunch | void | Launch | null>;
-  abort: (launchId: string) => Promise<void>;
+  abort: (launchId: string, userId: string) => Promise<void>;
 };
