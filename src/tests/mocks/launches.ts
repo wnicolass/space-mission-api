@@ -1,4 +1,7 @@
-import { IncomingLaunch } from '../../interfaces/launches.interfaces';
+import {
+  InDatabaseLaunch,
+  IncomingLaunch,
+} from '../../interfaces/launches.interfaces';
 import launchRepositoryFactory from '../../repositories/prisma/prisma-launch.repository';
 import { Planet } from '../../interfaces/planets.interfaces';
 import { createPlanetMock } from './planets';
@@ -10,13 +13,14 @@ export function createLaunchMock(
   launchDate: string,
   userId: string,
   planet: Planet = createPlanetMock(),
-): IncomingLaunch {
+): IncomingLaunch | InDatabaseLaunch {
   return {
     mission,
     rocket,
     launchDate,
     planet,
     userId,
+    createdBy: userId,
   };
 }
 
@@ -34,6 +38,7 @@ export async function createDbLaunchMock(
     launchDate,
     userId,
     planet,
+    createdBy: userId,
   };
   return await launchRepository.save(newLaunch);
 }

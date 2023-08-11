@@ -29,12 +29,35 @@ describe('Abort Launch Controller', () => {
       .set('authorization', `Bearer ${jwt}`)
       .send({
         launchId: 'fakeId',
+        userId: 'anyUserId',
       })
       .expect('Content-Type', /json/i)
       .expect(404);
 
     expect(response.body).toStrictEqual({
       error: 'Launch not found',
+    });
+  });
+
+  it('should respond with 403 forbidden if user cant abort launch', async () => {
+    const launchMock = (await createDbLaunchMock(
+      'Mock mission',
+      'Mock rocket',
+      '2030-12-12',
+      dbUserMock.userId,
+    )) as Launch;
+    const response = await request(app)
+      .del(LAUNCHES_URL)
+      .set('authorization', `Bearer ${jwt}`)
+      .send({
+        launchId: launchMock.launchId,
+        userId: 'anyUserId',
+      })
+      .expect('Content-Type', /json/i)
+      .expect(403);
+
+    expect(response.body).toStrictEqual({
+      error: 'Only the user who have created the launch can abort it',
     });
   });
 
@@ -50,6 +73,7 @@ describe('Abort Launch Controller', () => {
       .set('authorization', `Bearer ${jwt}`)
       .send({
         launchId: launchMock.launchId,
+        userId: dbUserMock.userId,
       })
       .expect('Content-Type', /json/i)
       .expect(200);

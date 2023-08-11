@@ -27,6 +27,7 @@ model UserProfile {
   updatedAt       DateTime     @updatedAt
   userAuthData    UserAuthData @relation(fields: [userId], references: [userId])
   launches        UserLaunch[]
+  Launch          Launch[]
 }
 
 model UserLaunch {
@@ -43,6 +44,8 @@ model Launch {
   launchId  String       @id @default(uuid())
   mission   String       @db.VarChar(255)
   rocket    String       @db.VarChar(255)
+  createdBy String       @db.VarChar(255)
+  user      UserProfile  @relation(fields: [createdBy], references: [userId])
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
   planetId  String       @db.VarChar(255)

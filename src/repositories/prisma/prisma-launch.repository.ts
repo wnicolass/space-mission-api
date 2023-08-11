@@ -27,6 +27,11 @@ export default function launchRepositoryFactory(): LaunchRepository {
               launchDate: new Date(newLaunch.launchDate),
             },
           },
+          user: {
+            connect: {
+              userId: newLaunch.userId,
+            },
+          },
         },
       });
     },
