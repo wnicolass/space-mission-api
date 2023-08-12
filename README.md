@@ -12,7 +12,7 @@ The API should be running at localhost:3000
 If you want to execute the project in production mode, run:
 
 ```bash
-npm run build:start # build and execute the api in production mode
+npm run build:start # build and execute api
 ```
 
 The project should be running at localhost:3000
