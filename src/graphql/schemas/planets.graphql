@@ -1,0 +1,9 @@
+type Query {
+  planets: [Planet]
+  planetById(id: ID!): Planet
+}
+
+type Planet {
+  planetId: ID!
+  planetName: String!
+}
