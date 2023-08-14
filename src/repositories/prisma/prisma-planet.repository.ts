@@ -6,5 +6,12 @@ export default function planetRepositoryFactory(): PlanetRepository {
     async getAll() {
       return prisma.planet.findMany();
     },
+    async getPlanetById(planetId) {
+      return prisma.planet.findUnique({
+        where: {
+          planetId,
+        },
+      });
+    },
   };
 }
