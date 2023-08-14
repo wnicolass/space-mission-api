@@ -1,10 +1,20 @@
 import planetRepositoryFactory from '../../repositories/prisma/prisma-planet.repository';
 
-export default {
-  Query: {
-    planets: async () => {
-      const planetsRepository = planetRepositoryFactory();
-      return await planetsRepository.getAll();
-    },
-  },
+type planetByIdArgs = {
+  planetId: string;
 };
+
+export default (function planetsResolvers() {
+  const planetsRepository = planetRepositoryFactory();
+
+  return {
+    Query: {
+      planets: async () => {
+        return await planetsRepository.getAll();
+      },
+      planetById: async (_: unknown, args: planetByIdArgs) => {
+        return await planetsRepository.getPlanetById(args.planetId);
+      },
+    },
+  };
+})();
