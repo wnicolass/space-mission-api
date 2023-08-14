@@ -9,7 +9,10 @@ export default function planetRepositoryFactory(): PlanetRepository {
     async getPlanetById(planetId) {
       return prisma.planet.findUnique({
         where: {
-          planetId,
+          planetId: planetId,
+        },
+        select: {
+          planetName: true,
         },
       });
     },
