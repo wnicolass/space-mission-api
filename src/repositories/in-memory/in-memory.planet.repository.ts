@@ -11,5 +11,13 @@ export default function inMemoryPlanetRepository(): PlanetRepository {
         return [];
       });
     },
+    getPlanetById(planetId: string) {
+      return new Promise((res) => {
+        const planet =
+          this.planets?.find((planet) => planet.planetId === planetId) || null;
+
+        return res(planet);
+      });
+    },
   };
 }
