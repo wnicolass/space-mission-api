@@ -1,6 +1,6 @@
 type Query {
   planets: [Planet]
-  planetById(id: ID!): Planet
+  planetById(planetId: ID!): Planet
 }
 
 type Planet {

@@ -17,4 +17,16 @@ describe('Planets Repository Tests', () => {
     );
     expect(planets.length).toBe(8);
   });
+
+  it('should find a planet by id', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    planetRepository.planets![0].planetId = 'findMe';
+    const planet = await planetRepository.getPlanetById('findMe');
+
+    expect(planet).toStrictEqual(
+      expect.objectContaining({
+        planetName: expect.any(String),
+      }),
+    );
+  });
 });

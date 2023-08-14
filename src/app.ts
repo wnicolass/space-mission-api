@@ -6,7 +6,7 @@ import v1Router from './routes/v1/v1.router';
 function createApp(): Express {
   const app: Express = express();
 
-  (function middlewares(): void {
+  (async function middlewares(): Promise<void> {
     app.use(morgan('dev'));
     app.use(express.json());
   })();
