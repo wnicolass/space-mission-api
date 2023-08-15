@@ -5,6 +5,8 @@ import checkAuthStatus from './check-auth-status';
 import serverErrorHandler from './server-error-handler';
 import { encodeJWT } from '../services/security/jwt/encode';
 import userAuthRepositoryFactory from '../repositories/prisma/prisma-user-auth.repository';
+import { signInFactory } from '../services/auth/signin/signin';
+import hashPassword from '../services/security/hash/hash-password';
 
 describe('Test check authentication status', () => {
   const testApp = express();
@@ -53,11 +55,18 @@ describe('Test check authentication status', () => {
   });
 
   it('should respond with 200 ok', async () => {
-    const jwt = await encodeJWT({ userId: '123', email: 'johndoe@gmail.com' });
-    const userRepository = userAuthRepositoryFactory();
-    await userRepository.signup({
+    const { hashedPassword } = await hashPassword('123');
+    const newUser = {
       username: 'john',
       email: 'johndoe@gmail.com',
+      password: hashedPassword,
+    };
+    const userRepository = userAuthRepositoryFactory();
+    await userRepository.signup(newUser);
+    const signInService = signInFactory(userRepository);
+    const jwt = await signInService.exec({
+      username: newUser.username,
+      email: newUser.email,
       password: '123',
     });
     const response = await request(testApp)
@@ -68,7 +77,7 @@ describe('Test check authentication status', () => {
 
     expect(response.body).toStrictEqual({
       message: 'I am a protected endpoint',
-      userId: '123',
+      userId: expect.any(String),
     });
   });
 });
