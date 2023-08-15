@@ -4,13 +4,13 @@ import { joinLaunchFactory } from '../../../services/launches/join/join-launch';
 
 export default (function joinLaunchController(): Controller {
   return {
-    async exec({ params, body }, res, next) {
+    async exec(req, res, next) {
       try {
         const userLaunchRepository = userLaunchRepositoryFactory();
         const joinLaunchService = joinLaunchFactory(userLaunchRepository);
         await joinLaunchService.exec({
-          launchId: params.launchId,
-          userId: body.userId,
+          launchId: req.params.launchId,
+          userId: req.user.userId,
         });
         return res.status(200).json({
           message: 'Successfully joined launch',

@@ -27,7 +27,6 @@ describe('Join Launch Controller', () => {
     const response = await request(app)
       .post(`${LAUNCHES_URL}/123`)
       .set('authorization', `Bearer ${jwt}`)
-      .send({ userId: '321' })
       .expect('Content-Type', /json/i)
       .expect(404);
 
@@ -37,21 +36,15 @@ describe('Join Launch Controller', () => {
   });
 
   it('should respond with 400 bad request if user already joined on launch', async () => {
-    const userMock = await createDbUserMock(
-      'testarino@gmail.com',
-      'Testarino1#',
-      'testarino',
-    );
     const launchMock = (await createDbLaunchMock(
       'Testarino mission',
       'TestarinoRocket',
       '2028-12-12',
-      userMock.userId,
+      dbUserMock.userId,
     )) as Launch;
     const response = await request(app)
       .post(`${LAUNCHES_URL}/${launchMock.launchId}`)
       .set('authorization', `Bearer ${jwt}`)
-      .send({ userId: userMock.userId })
       .expect('Content-Type', /json/i)
       .expect(400);
 
@@ -66,11 +59,18 @@ describe('Join Launch Controller', () => {
       'Testarino2#',
       'testarino2',
     );
-    const userMock2 = await createDbUserMock(
-      'thetester@gmail.com',
-      'Thetester1#',
-      'the thester',
+    const userMock2 = {
+      username: 'tester',
+      email: 'thetester@gmail.com',
+      password: 'the tester',
+    };
+    await createDbUserMock(
+      userMock2.email,
+      userMock2.password,
+      userMock2.username,
     );
+    const signInService = signInFactory(userAuthRepositoryFactory());
+    const sutJwt = await signInService.exec(userMock2);
     const launchMock = (await createDbLaunchMock(
       'Testarino mission',
       'TestarinoRocket',
@@ -79,8 +79,7 @@ describe('Join Launch Controller', () => {
     )) as Launch;
     const response = await request(app)
       .post(`${LAUNCHES_URL}/${launchMock.launchId}`)
-      .set('authorization', `Bearer ${jwt}`)
-      .send({ userId: userMock2.userId })
+      .set('authorization', `Bearer ${sutJwt}`)
       .expect('Content-Type', /json/i)
       .expect(200);
 
