@@ -41,7 +41,7 @@ describe('Abort Launch Service', () => {
     ) as InDatabaseLaunch;
     launchMock.launchId = 'removeme';
     launchesRepository.launches?.push(launchMock);
-    console.log(launchesRepository.launches);
+
     const abortLaunchService = abortLaunchFactory(launchesRepository);
     await expect(
       abortLaunchService.exec('removeme', launchMock.userId),
