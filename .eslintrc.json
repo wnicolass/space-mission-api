@@ -17,6 +17,7 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "no-explicit-any": "off"
+    "no-explicit-any": "off",
+    "no-unused-vars": "off"
   }
 }
