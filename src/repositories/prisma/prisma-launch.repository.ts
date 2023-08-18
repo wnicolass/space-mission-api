@@ -1,8 +1,5 @@
-import {
-  LaunchInfo,
-  LaunchRepository,
-} from '../../interfaces/launches.interfaces';
 import { UserLaunch } from '@prisma/client';
+import { LaunchRepository } from '../../interfaces/launches.interfaces';
 import prisma from '../../../prisma/client-singleton';
 
 export default function launchRepositoryFactory(): LaunchRepository {
@@ -50,32 +47,43 @@ export default function launchRepositoryFactory(): LaunchRepository {
       });
     },
     async getAll() {
-      return (await prisma.userLaunch.findMany({
-        select: {
-          launchDate: true,
-          launch: {
-            select: {
-              mission: true,
-              rocket: true,
-              users: {
-                select: {
-                  user: {
-                    select: {
-                      userId: true,
-                      username: true,
-                    },
+      return (
+        await prisma.userLaunch.findMany({
+          select: {
+            launchDate: true,
+            launch: {
+              select: {
+                mission: true,
+                rocket: true,
+                users: {
+                  select: {
+                    user: true,
                   },
                 },
-              },
-              planet: {
-                select: {
-                  planetName: true,
+                planet: {
+                  select: {
+                    planetName: true,
+                  },
                 },
               },
             },
           },
-        },
-      })) as unknown as LaunchInfo[];
+        })
+      ).map((launch) => {
+        return {
+          launchDate: launch.launchDate,
+          launch: {
+            mission: launch.launch.mission,
+            rocket: launch.launch.rocket,
+            planet: launch.launch.planet,
+            users: launch.launch.users.map((user) => {
+              return {
+                username: user.user.username,
+              };
+            }),
+          },
+        };
+      });
     },
     async getLaunchById(launchId) {
       return await prisma.launch.findFirst({
