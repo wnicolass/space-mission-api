@@ -1,0 +1,15 @@
+type Query {
+  launches: [LaunchResponse]
+}
+
+type LaunchResponse {
+  launchDate: String!
+  launch: Launch!
+}
+
+type Launch {
+  mission: String!
+  rocket: String!
+  users: [UserProfile]!
+  planet: Planet!
+}
