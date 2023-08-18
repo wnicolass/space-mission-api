@@ -16,7 +16,14 @@ export default (function saveLaunchController(): Controller {
           userRepository,
           planetRepository,
         );
-        await saveLaunchService.exec(req.body);
+        const incomingLaunch = {
+          mission: req.body.mission,
+          launchDate: req.body.launchDate,
+          planet: req.body.planet,
+          rocket: req.body.rocket,
+          userId: req.user.userId,
+        };
+        await saveLaunchService.exec(incomingLaunch);
         return res.status(201).json({
           message: 'Launch successfully created',
         });

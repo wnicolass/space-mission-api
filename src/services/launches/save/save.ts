@@ -3,7 +3,6 @@ import {
   IncomingLaunch,
   LaunchRepository,
 } from '../../../interfaces/launches.interfaces';
-import { UserNotFoundError } from '../../../errors/auth.errors';
 import {
   LaunchAlreadyExistsError,
   InvalidLaunchDateError,
@@ -34,11 +33,6 @@ export function saveLaunchFactory(
         throw new LaunchAlreadyExistsError(
           `Launch with mission name "${mission}" already exists`,
         );
-      }
-
-      const user = await userRepository.getUserById(userId);
-      if (!user) {
-        throw new UserNotFoundError('User not found');
       }
 
       const planets = (await planetRepository.getAll()).map(

@@ -20,11 +20,16 @@ export type JoinExpeditionInfo = {
   userId: string;
 };
 
+export type LaunchResponse = {
+  mission: string;
+  rocket: string;
+  users: Pick<UserProfile, 'username'>[];
+  planet: Planet;
+};
+
 export type LaunchInfo = {
   launchDate: string;
-  launch: Pick<Launch, 'mission' | 'rocket'> &
-    Pick<UserProfile, 'username' | 'userId'> &
-    Planet;
+  launch: LaunchResponse;
 };
 
 export type UserLaunchRepository = {
@@ -45,7 +50,7 @@ export type LaunchRepository = {
   launches?: (InDatabaseLaunch | IncomingLaunch)[];
   save: (newLaunch: IncomingLaunch) => Promise<void | Launch>;
   join: (launchId: string, userId: string) => Promise<void>;
-  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | LaunchInfo[]>;
+  getAll: () => Promise<(IncomingLaunch | InDatabaseLaunch)[] | any[]>;
   getLaunchById: (
     launchId: string,
   ) => Promise<InDatabaseLaunch | void | Launch | null>;

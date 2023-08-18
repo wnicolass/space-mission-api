@@ -86,25 +86,6 @@ describe('Save Launch Controller', () => {
     });
   });
 
-  it('should respond with a 404 not found if user with provided id is not found', async () => {
-    const incomingLaunchMock = createLaunchMock(
-      'Explore Mars',
-      'Tester IIC3',
-      '2026-07-03',
-      'sfsfsdafdas',
-    );
-    const response = await request(app)
-      .post(LAUNCHES_URL)
-      .set('authorization', `Bearer ${jwt}`)
-      .send(incomingLaunchMock)
-      .expect('Content-Type', /json/i)
-      .expect(404);
-
-    expect(response.body).toStrictEqual({
-      error: `User not found`,
-    });
-  });
-
   it('should respond with a 404 not found if invalid planet is provided', async () => {
     const incomingLaunchMock = createLaunchMock(
       'Explore Mars',
