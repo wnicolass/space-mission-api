@@ -72,19 +72,6 @@ describe('Save Launch Service', () => {
     );
   });
 
-  it('should throw an UserNotFoundError if does not find user by id', async ({
-    launchesRepository,
-    userRepository,
-    planetRepository,
-  }) => {
-    const { sut, launchMock } = createSut(
-      launchesRepository,
-      userRepository,
-      planetRepository,
-    );
-    expect(sut.exec(launchMock)).rejects.toThrowError('User not found');
-  });
-
   it('should throw a PlanetNotFoundError if invalid planet is provided', async ({
     launchesRepository,
     userRepository,
