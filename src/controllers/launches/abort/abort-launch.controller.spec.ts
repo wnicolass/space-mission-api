@@ -29,7 +29,6 @@ describe('Abort Launch Controller', () => {
       .set('authorization', `Bearer ${jwt}`)
       .send({
         launchId: 'fakeId',
-        userId: 'anyUserId',
       })
       .expect('Content-Type', /json/i)
       .expect(404);
@@ -46,12 +45,25 @@ describe('Abort Launch Controller', () => {
       '2030-12-12',
       dbUserMock.userId,
     )) as Launch;
+
+    const fakeUser = await createDbUserMock(
+      'fake@faker.com',
+      'Fake1#',
+      'faker',
+    );
+    const userRepository = userAuthRepositoryFactory();
+    const signInService = signInFactory(userRepository);
+    const anyJwt = await signInService.exec({
+      username: '',
+      email: fakeUser.email,
+      password: 'Fake1#',
+    });
+
     const response = await request(app)
       .del(LAUNCHES_URL)
-      .set('authorization', `Bearer ${jwt}`)
+      .set('authorization', `Bearer ${anyJwt}`)
       .send({
         launchId: launchMock.launchId,
-        userId: 'anyUserId',
       })
       .expect('Content-Type', /json/i)
       .expect(403);
@@ -73,7 +85,6 @@ describe('Abort Launch Controller', () => {
       .set('authorization', `Bearer ${jwt}`)
       .send({
         launchId: launchMock.launchId,
-        userId: dbUserMock.userId,
       })
       .expect('Content-Type', /json/i)
       .expect(200);
