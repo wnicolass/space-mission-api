@@ -29,7 +29,6 @@ describe('File Controller', () => {
       const response = await request(app)
         .post(FILES_URL)
         .set('authorization', `Bearer ${jwt}`)
-        .field('userId', dbUserMock.userId)
         .attach(
           'profileImage',
           join(__dirname, '..', '..', 'tests', 'files', 'invalid-file.mp4'),
