@@ -4,11 +4,11 @@ import launchRepositoryFactory from '../../../repositories/prisma/prisma-launch.
 
 export default (function abortLaunchController(): Controller {
   return {
-    async exec({ body }, res, next) {
+    async exec(req, res, next) {
       try {
         const launchesRepository = launchRepositoryFactory();
         const abortLaunchService = abortLaunchFactory(launchesRepository);
-        await abortLaunchService.exec(body.launchId, body.userId);
+        await abortLaunchService.exec(req.body.launchId, req.user.userId);
         return res.status(200).json({
           message: 'Successfully aborted launch',
         });
