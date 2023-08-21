@@ -2,6 +2,16 @@ type Query {
   launches: [LaunchResponse]
 }
 
+type Mutation {
+  createLaunch(
+    mission: String!
+    rocket: String!
+    launchDate: String!
+    planet: Planet!
+    userId: String!
+  ): LaunchResponse
+}
+
 type LaunchResponse {
   launchDate: String!
   launch: Launch!
