@@ -9,6 +9,7 @@ type Mutation {
     launchDate: String!
     planet: String!
   ): ResponseMessage
+  joinLaunch(launchId: String!): ResponseMessage
 }
 
 type ResponseMessage {
@@ -21,6 +22,7 @@ type LaunchResponse {
 }
 
 type Launch {
+  launchId: ID!
   mission: String!
   rocket: String!
   users: [UserProfile]!
