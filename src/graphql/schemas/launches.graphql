@@ -2,12 +2,27 @@ type Query {
   launches: [LaunchResponse]
 }
 
+type Mutation {
+  saveLaunch(
+    mission: String!
+    rocket: String!
+    launchDate: String!
+    planet: String!
+  ): ResponseMessage
+  joinLaunch(launchId: String!): ResponseMessage
+}
+
+type ResponseMessage {
+  message: String!
+}
+
 type LaunchResponse {
   launchDate: String!
   launch: Launch!
 }
 
 type Launch {
+  launchId: ID!
   mission: String!
   rocket: String!
   users: [UserProfile]!
