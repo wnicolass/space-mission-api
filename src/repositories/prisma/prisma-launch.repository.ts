@@ -53,6 +53,7 @@ export default function launchRepositoryFactory(): LaunchRepository {
             launchDate: true,
             launch: {
               select: {
+                launchId: true,
                 mission: true,
                 rocket: true,
                 users: {
@@ -73,6 +74,7 @@ export default function launchRepositoryFactory(): LaunchRepository {
         return {
           launchDate: launch.launchDate,
           launch: {
+            launchId: launch.launch.launchId,
             mission: launch.launch.mission,
             rocket: launch.launch.rocket,
             planet: launch.launch.planet,
