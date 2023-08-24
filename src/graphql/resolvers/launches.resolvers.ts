@@ -1,12 +1,12 @@
 import launchRepositoryFactory from '../../repositories/prisma/prisma-launch.repository';
 import planetRepositoryFactory from '../../repositories/prisma/prisma-planet.repository';
 import userAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
+import userLaunchRepositoryFactory from '../../repositories/prisma/prisma-userlaunch.repository';
 import { UserContext } from '../context';
 import { saveLaunchFactory } from '../../services/launches/save/save';
 import { joinLaunchFactory } from '../../services/launches/join/join-launch';
 import { ensureUserInContext } from '../helpers/validate-context-user';
 import { getAllLaunchesFactory } from '../../services/launches/get-all/get-all-launches';
-import userLaunchRepositoryFactory from '../../repositories/prisma/prisma-userlaunch.repository';
 
 type IncomingLaunchGQL = {
   mission: string;
