@@ -72,6 +72,13 @@ export default (function launchesResolvers() {
           message: 'Successfully joined launch',
         };
       },
+      abortLaunch: (
+        _: unknown,
+        args: Record<'launchId', string>,
+        context: UserContext,
+      ) => {
+        ensureUserInContext(context);
+      },
     },
   };
 })();
