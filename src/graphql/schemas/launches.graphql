@@ -10,6 +10,7 @@ type Mutation {
     planet: String!
   ): ResponseMessage
   joinLaunch(launchId: String!): ResponseMessage
+  abortLaunch(launchId: String!): ResponseMessage
 }
 
 type ResponseMessage {
