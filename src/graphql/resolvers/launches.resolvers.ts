@@ -7,6 +7,7 @@ import { saveLaunchFactory } from '../../services/launches/save/save';
 import { joinLaunchFactory } from '../../services/launches/join/join-launch';
 import { ensureUserInContext } from '../helpers/validate-context-user';
 import { getAllLaunchesFactory } from '../../services/launches/get-all/get-all-launches';
+import { abortLaunchFactory } from '../../services/launches/abort/abort-launch';
 
 type IncomingLaunchGQL = {
   mission: string;
@@ -70,6 +71,18 @@ export default (function launchesResolvers() {
         await joinLaunchService.exec(joinLaunchData);
         return {
           message: 'Successfully joined launch',
+        };
+      },
+      abortLaunch: async (
+        _: unknown,
+        args: Record<'launchId', string>,
+        context: UserContext,
+      ) => {
+        ensureUserInContext(context);
+        const abortLaunchService = abortLaunchFactory(launchRepository);
+        await abortLaunchService.exec(args.launchId, context.user!.userId);
+        return {
+          message: 'Successfully aborted launch',
         };
       },
     },
