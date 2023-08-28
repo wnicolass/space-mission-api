@@ -74,7 +74,7 @@ describe('Sign In Service', () => {
     );
     inMemoryUserAuth.users?.push(userMock);
 
-    const jwt = (await signIn.exec(userMock as UserAuthData)) as string;
+    const { jwt } = await signIn.exec(userMock as UserAuthData);
     expect(jwt).toBeTypeOf('string');
     expect(jwt.split('.').length).toBe(5);
   });

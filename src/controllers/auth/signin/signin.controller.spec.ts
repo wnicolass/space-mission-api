@@ -74,6 +74,7 @@ describe('Sign In Controller', () => {
       expect(response.body).toEqual(
         expect.objectContaining({
           access_token: expect.any(String),
+          userId: expect.any(String),
         }),
       );
     });

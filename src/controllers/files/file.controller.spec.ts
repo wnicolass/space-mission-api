@@ -17,11 +17,12 @@ describe('File Controller', () => {
     dbUserMock = await createDbUserMock('test4@test4.com', 'Test4#', 'tester4');
     const userRepository = userAuthRepositoryFactory();
     const signInService = signInFactory(userRepository);
-    jwt = await signInService.exec({
+    const { jwt: accessToken } = await signInService.exec({
       username: '',
       email: dbUserMock.email,
       password: 'Test4#',
     });
+    jwt = accessToken;
   });
 
   describe('POST /files', async () => {
@@ -57,7 +58,9 @@ describe('File Controller', () => {
         message: 'Successfully updated profile image',
         publicId: expect.any(String),
       });
-      cleanUpCloudinary(response.body.publicId);
+      await new Promise((res) =>
+        res(cleanUpCloudinary(response.body.publicId)),
+      );
     });
   });
 });
