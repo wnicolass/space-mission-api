@@ -9,7 +9,7 @@ export default (function v1Router(): Router {
   const router = Router();
 
   router.use('/auth', authRouter);
-  router.use('/user', userRouter);
+  router.use('/users', userRouter);
   router.use('/files', fileRouter);
   router.use('/planets', planetsRouter);
   router.use('/launches', launchesRouter);
