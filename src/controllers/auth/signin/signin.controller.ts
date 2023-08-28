@@ -8,9 +8,10 @@ export default (function signInController(): Controller {
       try {
         const userAuthRepository = userAuthRepositoryFactory();
         const signInService = signInFactory(userAuthRepository);
-        const accessToken = await signInService.exec(req.body);
+        const { jwt, userId } = await signInService.exec(req.body);
         return res.status(200).json({
-          access_token: accessToken,
+          access_token: jwt,
+          userId,
         });
       } catch (err: unknown) {
         return next(err);
