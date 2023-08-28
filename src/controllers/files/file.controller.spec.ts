@@ -4,9 +4,9 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import request from 'supertest';
 import { signInFactory } from '../../services/auth/signin/signin';
 import { createDbUserMock } from '../../tests/mocks/user';
-import app from '../../app';
-import userAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
 import { cleanUpCloudinary } from '../../tests/utils/cleanup-cloudinary';
+import userAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
+import app from '../../app';
 
 describe('File Controller', () => {
   const FILES_URL = '/v1/files';
