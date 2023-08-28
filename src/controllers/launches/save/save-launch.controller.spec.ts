@@ -17,11 +17,12 @@ describe('Save Launch Controller', () => {
     dbUserMock = await createDbUserMock('test@test.com', 'Test1#', 'tester');
     const userRepository = userAuthRepositoryFactory();
     const signInService = signInFactory(userRepository);
-    jwt = await signInService.exec({
+    const { jwt: accessToken } = await signInService.exec({
       username: '',
       email: dbUserMock.email,
       password: 'Test1#',
     });
+    jwt = accessToken;
   });
 
   it('should respond with a 401 unauthorized if user is not authenticated', async () => {

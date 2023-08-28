@@ -64,7 +64,7 @@ describe('Test check authentication status', () => {
     const userRepository = userAuthRepositoryFactory();
     await userRepository.signup(newUser);
     const signInService = signInFactory(userRepository);
-    const jwt = await signInService.exec({
+    const { jwt } = await signInService.exec({
       username: newUser.username,
       email: newUser.email,
       password: '123',

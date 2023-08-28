@@ -16,11 +16,12 @@ describe('Abort Launch Controller', () => {
     dbUserMock = await createDbUserMock('mock@mocker.com', 'Mock1#', 'mocker');
     const userRepository = userAuthRepositoryFactory();
     const signInService = signInFactory(userRepository);
-    jwt = await signInService.exec({
+    const { jwt: accessToken } = await signInService.exec({
       username: '',
       email: dbUserMock.email,
       password: 'Mock1#',
     });
+    jwt = accessToken;
   });
 
   it('should respond with 404 not found if does not find launch by id', async () => {
@@ -53,7 +54,7 @@ describe('Abort Launch Controller', () => {
     );
     const userRepository = userAuthRepositoryFactory();
     const signInService = signInFactory(userRepository);
-    const anyJwt = await signInService.exec({
+    const { jwt: anyJwt } = await signInService.exec({
       username: '',
       email: fakeUser.email,
       password: 'Fake1#',

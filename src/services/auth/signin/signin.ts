@@ -42,7 +42,7 @@ export function signInFactory(userAuthRepository: UserAuthRepository) {
         email: user.email,
       };
 
-      return await encodeJWT(payload);
+      return { jwt: await encodeJWT(payload), userId: payload.userId };
     },
   };
 }

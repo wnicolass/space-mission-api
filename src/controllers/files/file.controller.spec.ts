@@ -1,27 +1,29 @@
 import { join } from 'node:path';
 import { UserAuthData } from '@prisma/client';
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import request from 'supertest';
 import { signInFactory } from '../../services/auth/signin/signin';
 import { createDbUserMock } from '../../tests/mocks/user';
-import app from '../../app';
-import userAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
 import { cleanUpCloudinary } from '../../tests/utils/cleanup-cloudinary';
+import userAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
+import app from '../../app';
 
 describe('File Controller', () => {
   const FILES_URL = '/v1/files';
   let jwt = '';
+  let publicImageId = '';
   let dbUserMock: UserAuthData;
 
   beforeAll(async () => {
     dbUserMock = await createDbUserMock('test4@test4.com', 'Test4#', 'tester4');
     const userRepository = userAuthRepositoryFactory();
     const signInService = signInFactory(userRepository);
-    jwt = await signInService.exec({
+    const { jwt: accessToken } = await signInService.exec({
       username: '',
       email: dbUserMock.email,
       password: 'Test4#',
     });
+    jwt = accessToken;
   });
 
   describe('POST /files', async () => {
@@ -57,7 +59,9 @@ describe('File Controller', () => {
         message: 'Successfully updated profile image',
         publicId: expect.any(String),
       });
-      cleanUpCloudinary(response.body.publicId);
+      publicImageId = response.body.publicId;
     });
+
+    afterAll(() => cleanUpCloudinary(publicImageId));
   });
 });

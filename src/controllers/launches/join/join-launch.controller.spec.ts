@@ -16,11 +16,12 @@ describe('Join Launch Controller', () => {
     dbUserMock = await createDbUserMock('test2@test2.com', 'Test2#', 'tester2');
     const userRepository = userAuthRepositoryFactory();
     const signInService = signInFactory(userRepository);
-    jwt = await signInService.exec({
+    const { jwt: accessToken } = await signInService.exec({
       username: '',
       email: dbUserMock.email,
       password: 'Test2#',
     });
+    jwt = accessToken;
   });
 
   it('should respond with 404 not found if does not find launch to join', async () => {
@@ -70,7 +71,7 @@ describe('Join Launch Controller', () => {
       userMock2.username,
     );
     const signInService = signInFactory(userAuthRepositoryFactory());
-    const sutJwt = await signInService.exec(userMock2);
+    const { jwt: sutJwt } = await signInService.exec(userMock2);
     const launchMock = (await createDbLaunchMock(
       'Testarino mission',
       'TestarinoRocket',

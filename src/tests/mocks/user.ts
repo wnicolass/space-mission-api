@@ -74,3 +74,11 @@ export const inDbUser = {
   email: 'jansen@gmail.com',
   hashedPassword: 'fdsfdsfsdfs',
 };
+
+export const inDbUserWithProfileImage = {
+  userId: 'anyId',
+  username: 'John Doe',
+  email: 'jansen@gmail.com',
+  profileImageUrl: 'https://someuri.com',
+  launches: [],
+};
