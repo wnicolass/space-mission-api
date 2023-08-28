@@ -34,6 +34,16 @@ export default function userAuthRepositoryFactory(): UserAuthRepository {
         where: {
           userId,
         },
+        select: {
+          userId: true,
+          userProfileData: {
+            select: {
+              username: true,
+              launches: true,
+              profileImageUrl: true,
+            },
+          },
+        },
       });
       if (user) {
         return user;
