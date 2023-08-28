@@ -49,6 +49,7 @@ export default function launchRepositoryFactory(): LaunchRepository {
     async getAll() {
       return (
         await prisma.userLaunch.findMany({
+          distinct: ['launchId'],
           select: {
             launchDate: true,
             launch: {
