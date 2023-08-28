@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 import { UserAuthData } from '@prisma/client';
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import request from 'supertest';
 import { signInFactory } from '../../services/auth/signin/signin';
 import { createDbUserMock } from '../../tests/mocks/user';
@@ -11,6 +11,7 @@ import app from '../../app';
 describe('File Controller', () => {
   const FILES_URL = '/v1/files';
   let jwt = '';
+  let publicImageId = '';
   let dbUserMock: UserAuthData;
 
   beforeAll(async () => {
@@ -58,9 +59,9 @@ describe('File Controller', () => {
         message: 'Successfully updated profile image',
         publicId: expect.any(String),
       });
-      await new Promise((res) =>
-        res(cleanUpCloudinary(response.body.publicId)),
-      );
+      publicImageId = response.body.publicId;
     });
+
+    afterAll(() => cleanUpCloudinary(publicImageId));
   });
 });

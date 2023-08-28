@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import request from 'supertest';
 import app from '../../app';
-// import userAuthRepositoryFactory from '../../repositories/prisma/prisma-user-auth.repository';
 import { createDbUserMock } from '../../tests/mocks/user';
 
 describe('Get User Profile Controller', () => {
@@ -13,7 +12,7 @@ describe('Get User Profile Controller', () => {
     );
 
     const response = await request(app)
-      .get(`/v1/user/${userMock.userId}`)
+      .get(`/v1/users/${userMock.userId}`)
       .expect('Content-Type', /json/i)
       .expect(200);
 
