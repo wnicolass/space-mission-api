@@ -21,7 +21,7 @@ export type UserAuthRepository = {
   users?: InDatabaseUser[];
   signup(data: UserAuthData): Promise<void>;
   getUserByEmail(email: string): Promise<InDatabaseUser | void>;
-  getUserById(userId: string): Promise<InDatabaseUser | void>;
+  getUserById(userId: string): Promise<InDatabaseUser | void> | any;
   updateProfile(userId: string, newData: UserProfile): Promise<UserProfile>;
 };
 
