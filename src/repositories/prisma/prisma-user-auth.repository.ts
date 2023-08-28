@@ -39,7 +39,12 @@ export default function userAuthRepositoryFactory(): UserAuthRepository {
           userProfileData: {
             select: {
               username: true,
-              launches: true,
+              launches: {
+                select: {
+                  launchId: true,
+                  launchDate: true,
+                },
+              },
               profileImageUrl: true,
             },
           },
