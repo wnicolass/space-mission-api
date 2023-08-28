@@ -1,3 +1,8 @@
+export type SignInResponse = {
+  jwt: string;
+  userId: string;
+};
+
 export type UserAuthData = {
   username: string;
   email: string;

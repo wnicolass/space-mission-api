@@ -1,12 +1,12 @@
 import { test } from 'vitest';
 import {
+  SignInResponse,
   UserAuthData,
   UserAuthRepository,
-  UserAuthWithoutPassword,
 } from '../../interfaces/user.interfaces';
 
 type AuthExec = {
-  exec: (data: UserAuthData) => Promise<UserAuthWithoutPassword | string>;
+  exec: (data: UserAuthData) => Promise<SignInResponse>;
 };
 
 export type AuthTestContext = {
