@@ -18,7 +18,7 @@ npm cert # generate a self-signed certificate
 npm run start:dev # execute project in dev mode
 ```
 
-The server uses the 'node:https' built-in module, so don't forget to generate the certificate
+The server uses the 'node:https' built-in module, so don't forget to generate the self-signed certificate
 
 At this point, the API should be running at https://localhost:3000
 
