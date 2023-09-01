@@ -10,7 +10,7 @@ You'll need to create a jwt secret. With openssl you can create the secret with 
 openssl rand -hex 32
 ```
 
-After adding all env variables, you can execute the project in dev mode, just run:
+After adding all environment variables, you can execute the project in dev mode, just run:
 
 ```bash
 npm install # install all packages
@@ -18,7 +18,7 @@ npm cert # generate a self-signed certificate
 npm run start:dev # execute project in dev mode
 ```
 
-The server uses the 'node:https' built-in module, so don't forget to generate the self-signed certificate
+The server uses the 'node:https' built-in module, so don't forget to **generate the self-signed certificate**
 
 At this point, the API should be running at https://localhost:3000
 
