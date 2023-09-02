@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  title: Components to help structure documentation
+components:
+  schemas:
+    Planet:
+      type: object
+      properties:
+        planetId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        planetName:
+          type: string
+          example: Kepler 442b
+      required:
+        - planetId
+        - planetName
