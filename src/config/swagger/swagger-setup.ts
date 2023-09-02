@@ -5,7 +5,7 @@ import { parse as parseYAML } from 'yaml';
 import swaggerUi from 'swagger-ui-express';
 
 export async function setupSwagger(app: Express) {
-  const docFilePath = join('src', 'config', 'swagger', 'api-doc.yaml');
+  const docFilePath = join('docs', 'spec', 'api-doc.yaml');
   const docFile = await readFile(docFilePath, 'utf-8');
   const swaggerDoc = parseYAML(docFile);
 
