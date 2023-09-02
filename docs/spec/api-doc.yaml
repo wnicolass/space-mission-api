@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: Space Mission API
+  summary: A space mission manager
+  description: Simple server where users can schedule missions to habitable planets
+  version: 1.0.0
+servers:
+  - url: https://localhost:3000/v1
+    description: Main development server
+license:
+  name: MIT
+  url: https://github.com/wnicolass/nasa-ztm-ts/blob/main/LICENSE.md
+paths:
+  /planets:
+    get:
+      summary: Returns a list of planets
+      responses:
+        '404':
+          description: No planets were found
+        '200':
+          description: An array of planets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'planet.yaml#/components/schemas/Planet'
+components:
+  schemas:
+    Planet:
+      type: object
+      properties:
+        planetId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        planetName:
+          type: string
+          example: Kepler 442b
