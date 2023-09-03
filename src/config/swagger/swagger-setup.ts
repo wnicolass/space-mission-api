@@ -1,13 +1,31 @@
 import { join } from 'path';
+import { readdir, stat } from 'fs/promises';
 import { Express } from 'express';
-import { readFile } from 'fs/promises';
-import { parse as parseYAML } from 'yaml';
+import { mergeFiles } from 'merge-yaml-ts';
 import swaggerUi from 'swagger-ui-express';
 
-export async function setupSwagger(app: Express) {
-  const docFilePath = join('docs', 'spec', 'api-doc.yaml');
-  const docFile = await readFile(docFilePath, 'utf-8');
-  const swaggerDoc = parseYAML(docFile);
+async function findYamlDocs(): Promise<string[]> {
+  const yamlDocs: string[] = [];
+  const specPath = join('docs', 'spec');
+  const yamlDocsPath = await readdir(specPath);
 
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+  for (const doc of yamlDocsPath) {
+    const docPath = join(specPath, doc);
+    const docStats = await stat(docPath);
+    if (docStats.isDirectory()) {
+      const childFolderDocs = await readdir(docPath);
+      childFolderDocs.forEach((doc) => yamlDocs.push(join(docPath, doc)));
+      continue;
+    }
+    yamlDocs.push(docPath);
+  }
+
+  return yamlDocs;
+}
+
+export async function setupSwagger(app: Express) {
+  const allYAMLFiles: string[] = await findYamlDocs();
+  const mainYAMLFile = mergeFiles(allYAMLFiles);
+
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(mainYAMLFile));
 }
