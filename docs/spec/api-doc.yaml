@@ -137,6 +137,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+  /launches/{launchId}:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Join an existing launch
+      parameters:
+        - in: path
+          name: launchId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Joined launch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinLaunchResponse'
+        '400':
+          description: User already joined launch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
+        '404':
+          description: Launch not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
   /planets:
     get:
       summary: Returns a list of planets
