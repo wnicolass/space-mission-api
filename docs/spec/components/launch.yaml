@@ -46,6 +46,11 @@ components:
             planetName:
               type: string
               example: Kepler-442 b
+      required:
+        - launchDate
+        - mission
+        - rocket
+        - planet
     ResponseLaunch:
       type: object
       properties:
@@ -58,3 +63,17 @@ components:
         message:
           type: string
           example: Successfully joined launch
+    AbortLaunchRequest:
+      type: object
+      properties:
+        launchId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+      required:
+        - launchId
+    AbortLaunchResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Successfully aborted launch
