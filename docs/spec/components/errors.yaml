@@ -11,4 +11,4 @@ components:
       properties:
         message:
           type: string
-          example: User not found
+          example: Something was not found
