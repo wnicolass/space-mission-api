@@ -1,0 +1,19 @@
+components:
+  schemas:
+    RequestFile:
+      type: object
+      properties:
+        profileImage:
+          type: string
+          format: binary
+          contentMediaType: image/png
+      required:
+        - profileImage
+    ResponseFile:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Successfully updated profile image
+        publicId:
+          type: string
