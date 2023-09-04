@@ -1,0 +1,30 @@
+components:
+  schemas:
+    Launch:
+      type: object
+      properties:
+        launchDate:
+          type: string
+          example: '2023-12-12'
+        launch:
+          type: object
+          properties:
+            launchId:
+              type: string
+              example: 550e8400-e29b-41d4-a716-446655440000
+            mission:
+              type: string
+              example: Mars exploration
+            rocket:
+              type: string
+              example: Rocket-IIC3
+            planet:
+              $ref: '#/components/schemas/Planet'
+            users:
+              type: array
+              items:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: Ellie
