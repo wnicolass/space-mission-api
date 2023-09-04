@@ -1,0 +1,32 @@
+components:
+  schemas:
+    InvalidArgumentError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid or already existing data sent
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Something was not found
+    UnauthorizedUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Unauthorized user
+    ForbiddenError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: No permission
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Something went wrong on the server

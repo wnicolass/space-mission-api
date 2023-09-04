@@ -1,0 +1,76 @@
+components:
+  schemas:
+    UserSignUp:
+      type: object
+      properties:
+        username:
+          type: string
+          example: Ellie
+        email:
+          type: string
+          example: ellie@mail.com
+        password:
+          type: string
+          example: Ellie1#
+      required:
+        - username
+        - email
+        - password
+    UserSignUpResponse:
+      type: object
+      properties:
+        username:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: john@mail.com
+        message:
+          type: string
+          example: User successfully created
+    UserSignIn:
+      type: object
+      properties:
+        email:
+          type: string
+          example: ellie@mail.com
+        password:
+          type: string
+          example: Ellie1#
+      required:
+        - email
+        - password
+    UserSignInResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        userId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+    UserProfile:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        userProfileData:
+          type: object
+          properties:
+            username:
+              type: string
+              example: Ellie
+            launches:
+              type: array
+              items:
+                type: object
+                properties:
+                  launchId:
+                    type: string
+                    example: 550e8400-e29b-41d4-a716-446655440000
+                  launchDate:
+                    type: string
+                    example: '2023-12-12'
+            profileImageUrl:
+              type: string
+              example: https://linktouserimage.com/Ellie

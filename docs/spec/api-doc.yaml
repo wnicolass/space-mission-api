@@ -11,12 +11,285 @@ license:
   name: MIT
   url: https://github.com/wnicolass/nasa-ztm-ts/blob/main/LICENSE.md
 paths:
+  /auth/signup:
+    post:
+      summary: Allows an anonymous user to create an account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignUp'
+      responses:
+        '201':
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSignUpResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /auth/signin:
+    post:
+      summary: Allows a user to authenticate its identity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignIn'
+      responses:
+        '200':
+          description: User successfully logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSignInResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
+        '404':
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /users/{userId}:
+    get:
+      summary: Returns a user by ID
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '404':
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /files:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Upload user profile image
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RequestFile'
+      responses:
+        '200':
+          description: Updated profile image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseFile'
+        '400':
+          description: Invalid file extension/size
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedUserError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /launches:
+    get:
+      summary: Returns a list of launches
+      responses:
+        '200':
+          description: Launches found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Launch'
+        '404':
+          description: Launches not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      security:
+        - bearerAuth: []
+      summary: Save a new launch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestLaunch'
+      responses:
+        '201':
+          description: Launch saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseLaunch'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedUserError'
+        '404':
+          description: Planet not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Join an existing launch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AbortLaunchRequest'
+      responses:
+        '200':
+          description: Launch aborted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbortLaunchResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedUserError'
+        '403':
+          description: User does not has permission to abort launch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Launch not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /launches/{launchId}:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Join an existing launch
+      parameters:
+        - in: path
+          name: launchId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Joined launch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinLaunchResponse'
+        '400':
+          description: User already joined launch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedUserError'
+        '404':
+          description: Launch not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
   /planets:
     get:
       summary: Returns a list of planets
       responses:
-        '404':
-          description: No planets were found
         '200':
           description: An array of planets
           content:
@@ -25,3 +298,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Planet'
+        '404':
+          description: Planets not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
