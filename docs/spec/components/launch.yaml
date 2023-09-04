@@ -52,3 +52,9 @@ components:
         message:
           type: string
           example: Launch successfully created
+    JoinLaunchResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Successfully joined launch
