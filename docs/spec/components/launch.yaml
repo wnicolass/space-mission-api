@@ -28,3 +28,27 @@ components:
                   username:
                     type: string
                     example: Ellie
+    RequestLaunch:
+      type: object
+      properties:
+        launchDate:
+          type: string
+          example: '2023-12-12'
+        mission:
+          type: string
+          example: Mars exploration
+        rocket:
+          type: string
+          example: Rocket-IIC3
+        planet:
+          type: object
+          properties:
+            planetName:
+              type: string
+              example: Kepler-442 b
+    ResponseLaunch:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Launch successfully created
