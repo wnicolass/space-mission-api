@@ -102,6 +102,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+    post:
+      security:
+        - bearerAuth: []
+      summary: Save a new launch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestLaunch'
+      responses:
+        '201':
+          description: Launch saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseLaunch'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedUserError'
+        '404':
+          description: Planet not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
   /planets:
     get:
       summary: Returns a list of planets
