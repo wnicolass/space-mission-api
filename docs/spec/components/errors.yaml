@@ -1,0 +1,8 @@
+components:
+  schemas:
+    InvalidArgumentError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid email
