@@ -1,0 +1,30 @@
+components:
+  schemas:
+    UserSignUp:
+      type: object
+      properties:
+        username:
+          type: string
+          example: Ellie
+        email:
+          type: string
+          example: ellie@mail.com
+        password:
+          type: string
+          example: Ellie1#
+      required:
+        - username
+        - email
+        - password
+    UserSignUpResponse:
+      type: object
+      properties:
+        username:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: john@mail.com
+        message:
+          type: string
+          example: User successfully created
