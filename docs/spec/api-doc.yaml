@@ -137,6 +137,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Join an existing launch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AbortLaunchRequest'
+      responses:
+        '200':
+          description: Launch aborted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbortLaunchResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedUserError'
+        '403':
+          description: User does not has permission to abort launch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Launch not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
   /launches/{launchId}:
     post:
       security:
@@ -162,6 +197,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidArgumentError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedUserError'
         '404':
           description: Launch not found
           content:
