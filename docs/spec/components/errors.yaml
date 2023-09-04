@@ -18,3 +18,9 @@ components:
         message:
           type: string
           example: Unauthorized user
+    ForbiddenError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: No permission
