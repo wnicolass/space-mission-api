@@ -12,3 +12,9 @@ components:
         message:
           type: string
           example: Something was not found
+    UnauthorizedUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Unauthorized user
