@@ -48,3 +48,29 @@ components:
         userId:
           type: string
           example: 550e8400-e29b-41d4-a716-446655440000
+    UserProfile:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        userProfileData:
+          type: object
+          properties:
+            username:
+              type: string
+              example: Ellie
+            launches:
+              type: array
+              items:
+                type: object
+                properties:
+                  launchId:
+                    type: string
+                    example: 550e8400-e29b-41d4-a716-446655440000
+                  launchDate:
+                    type: string
+                    example: '2023-12-12'
+            profileImageUrl:
+              type: string
+              example: https://linktouserimage.com/Ellie
