@@ -6,3 +6,9 @@ components:
         message:
           type: string
           example: Invalid email
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User not found
