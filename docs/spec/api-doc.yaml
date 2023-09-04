@@ -56,7 +56,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InvalidArgumentError'
         '404':
-          description: Not Found
+          description: User Not Found
           content:
             application/json:
               schema:
@@ -80,6 +80,24 @@ paths:
                 $ref: '#/components/schemas/UserProfile'
         '404':
           description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /launches:
+    get:
+      summary: Returns a list of launches
+      responses:
+        '200':
+          description: Launches found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Launch'
+        '404':
+          description: Launches not found
           content:
             application/json:
               schema:
