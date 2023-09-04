@@ -5,7 +5,7 @@ components:
       properties:
         message:
           type: string
-          example: Invalid email
+          example: Invalid or already existing data sent
     NotFoundError:
       type: object
       properties:
