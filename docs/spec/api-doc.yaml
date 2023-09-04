@@ -33,6 +33,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidArgumentError'
+  /auth/signin:
+    post:
+      summary: Allows a user to authenticate its identity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignIn'
+      responses:
+        '200':
+          description: User successfully logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSignInResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
   /planets:
     get:
       summary: Returns a list of planets

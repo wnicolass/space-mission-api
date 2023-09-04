@@ -28,3 +28,23 @@ components:
         message:
           type: string
           example: User successfully created
+    UserSignIn:
+      type: object
+      properties:
+        email:
+          type: string
+          example: ellie@mail.com
+        password:
+          type: string
+          example: Ellie1#
+      required:
+        - email
+        - password
+    UserSignInResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        userId:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
