@@ -11,12 +11,32 @@ license:
   name: MIT
   url: https://github.com/wnicolass/nasa-ztm-ts/blob/main/LICENSE.md
 paths:
+  /auth/signup:
+    post:
+      summary: Allows an anonymous user to create an account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignUp'
+      responses:
+        '201':
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSignUpResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgumentError'
   /planets:
     get:
       summary: Returns a list of planets
       responses:
-        '404':
-          description: No planets were found
         '200':
           description: An array of planets
           content:
@@ -25,3 +45,5 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Planet'
+        '404':
+          description: No planets were found
