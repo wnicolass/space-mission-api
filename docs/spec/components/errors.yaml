@@ -24,3 +24,9 @@ components:
         message:
           type: string
           example: No permission
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Something went wrong on the server
