@@ -15,7 +15,8 @@ export async function setupApolloServer(
   const graphqlTypes = loadFilesSync('**/*', {
     extensions: ['graphql'],
   });
-  const resolvers = loadFilesSync('**/*.resolvers.ts');
+  const resolverFileExt = process.env.NODE_ENV === 'production' ? 'js' : 'ts';
+  const resolvers = loadFilesSync(`**/*.resolvers.${resolverFileExt}`);
   const schema = makeExecutableSchema({
     typeDefs: graphqlTypes,
     resolvers,

@@ -4,7 +4,7 @@
   "description": "Space mission API project based on the NASA Mission Control ztm's project.",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "start:dev": "ts-node-dev --respawn --watch src src/server.ts",
     "build": "tsup src",
     "build:start": "npm run build && npm start",
