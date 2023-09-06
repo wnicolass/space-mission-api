@@ -10,7 +10,7 @@ services:
       - '5432:5432'
 
   node:
-    build: .
+    image: nicolaslima99/space-mission-api
     working_dir: /app
     ports:
       - '3000:3000'
