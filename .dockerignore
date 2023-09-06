@@ -1,0 +1,9 @@
+.git
+
+**/dist
+
+**/*.spec.*
+
+**/coverage
+
+**/node_modules
