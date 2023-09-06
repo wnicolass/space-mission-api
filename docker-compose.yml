@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:16rc1-alpine3.18
+    environment:
+      POSTGRES_PASSWORD: smapi
+      POSTGRES_DB: space_mission_api
+    ports:
+      - '5432:5432'
+
+  node:
+    build: .
+    working_dir: /app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    command: ['npm', 'start']
