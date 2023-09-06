@@ -1,3 +1,14 @@
-FROM postgres:16rc1-alpine3.18
-ENV POSTGRES_PASSWORD smapi
-ENV POSTGRES_DB space_mission_api
+FROM node:lts-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install --omit=dev
+
+COPY . .
+RUN npm run build
+RUN npx prisma generate
+
+USER node
+
+EXPOSE 3000
