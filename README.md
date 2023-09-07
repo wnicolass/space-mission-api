@@ -10,6 +10,8 @@ You'll need to create a jwt secret. With **openssl** you can create the secret w
 openssl rand -hex 32
 ```
 
+_To get 100% of the project you'll also need to create a_ **cloudinary account**.
+
 After adding all environment variables, you can execute the project in dev mode, just run:
 
 ```bash
