@@ -29,3 +29,7 @@ npm run build:start # build and execute api in production
 ```
 
 The builded project should be running at localhost:3000
+
+## 📝 License
+
+This project is licensed under the MIT license. See the [LICENSE](./LICENSE.md) file for more details.
